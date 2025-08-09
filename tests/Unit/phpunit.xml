@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- https://phpunit.readthedocs.io/en/latest/configuration.html -->
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="../../vendor/phpunit/phpunit/phpunit.xsd"
+         backupGlobals="false"
+         colors="true"
+         bootstrap="../../config/bootstrap.php"
+         defaultTestSuite="all"
+         displayDetailsOnSkippedTests="true"
+         displayDetailsOnTestsThatTriggerWarnings="true"
+>
+    <php>
+        <ini name="error_reporting" value="-1" />
+        <env name="APP_ENV" value="test" />
+        <env name="SHELL_VERBOSITY" value="-1" />
+        <server name="KERNEL_CLASS" value="App\Kernel" />
+    </php>
+
+    <testsuites>
+        <testsuite name="all">
+            <directory suffix=".php">../../tests/Unit</directory>
+        </testsuite>
+    </testsuites>
+
+    <source>
+        <include>
+            <directory suffix=".php">../../src/Shared/Domain</directory>
+            <directory suffix=".php">../../src/Context/*/Domain</directory>
+        </include>
+    </source>
+
+    <coverage includeUncoveredFiles="true"
+              pathCoverage="false"
+              ignoreDeprecatedCodeUnits="true"
+              disableCodeCoverageIgnore="true">
+        <report>
+            <html outputDirectory="../../coverage"/>
+        </report>
+    </coverage>
+</phpunit>
