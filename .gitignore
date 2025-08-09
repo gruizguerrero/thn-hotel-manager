@@ -1,10 +1,24 @@
-
-###> symfony/framework-bundle ###
 /.env.local
-/.env.local.php
-/.env.*.local
-/config/secrets/prod/prod.decrypt.private.php
-/public/bundles/
 /var/
 /vendor/
-###< symfony/framework-bundle ###
+
+/.idea
+
+/bin/
+!/bin/console
+
+/resources/docker/local/mysql/volume_mappings.yml
+/resources/docker/local/mongodb/volume_mappings.yml
+
+/.php-cs-fixer.php
+/.php-cs-fixer.cache
+
+phpstan.neon
+
+/.phpcs-cache
+/phpcs.xml
+
+.phpunit.result.cache
+/phpunit.xml
+
+/coverage/
