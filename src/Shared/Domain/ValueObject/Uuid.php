@@ -2,7 +2,6 @@
 
 namespace App\Shared\Domain\ValueObject;
 
-
 use App\Shared\Domain\Service\Assert;
 use App\Shared\Domain\Service\UuidGenerator;
 
@@ -25,6 +24,12 @@ class Uuid
     public static function fromString(string $value): static
     {
         return new self($value);
+    }
+
+    public function equalsTo(Uuid $other): bool
+    {
+        return $this->value === $other->value()
+            && get_class($this) === get_class($other);
     }
 
     public static function addUuid4Dashes(string $stringUuid): string
