@@ -8,6 +8,8 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "beberlei/assert": "^3.3",
+        "doctrine/doctrine-bundle": "*",
+        "doctrine/orm": "^3.5",
         "ramsey/uuid": "^4.9",
         "symfony/console": "6.4.*",
         "symfony/dotenv": "6.4.*",
