@@ -12,7 +12,7 @@ class Uuid
     private function __construct(string $value)
     {
         $string = self::addUuid4Dashes($value);
-        Assert::uuid($string);
+        Assert::uuid4($string);
         $this->value = $string;
     }
 
