@@ -8,7 +8,7 @@ abstract class TypedCollection extends Collection
 {
     public function __construct(array $elements)
     {
-        Assert::allIsInstanceOf($elements, TypedCollection::class);
+        Assert::allIsInstanceOf($elements, $this->type());
         parent::__construct($elements);
     }
 
