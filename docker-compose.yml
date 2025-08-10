@@ -26,17 +26,21 @@ services:
     image: mysql:8.0
     container_name: mysql
     platform: linux/arm64
-    command: --default-authentication-plugin=mysql_native_password
+    extends:
+      file: docker/mysql/volume_mappings.yml
+      service: mysql
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_ROOT_PASSWORD: ""
       MYSQL_DATABASE: campaign_manager
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
+      MYSQL_USER: default_user
+      MYSQL_PASSWORD: default_password
     ports:
-      - "3306:3306"
+      - '13306:3306'
 
   rabbitmq:
     build: docker/rabbitmq
     container_name: rabbitmq
     ports:
       - "15972:15672"
+

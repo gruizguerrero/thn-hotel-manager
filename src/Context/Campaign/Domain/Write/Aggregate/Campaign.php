@@ -8,6 +8,7 @@ use App\Shared\Domain\Write\Aggregate\AggregateRoot;
 class Campaign extends AggregateRoot
 {
     private string $name;
+    private string $lastName;
 
     public static function create(Uuid $id, string $name): self
     {

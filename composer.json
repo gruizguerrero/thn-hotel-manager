@@ -9,6 +9,7 @@
         "ext-iconv": "*",
         "beberlei/assert": "^3.3",
         "doctrine/doctrine-bundle": "*",
+        "doctrine/doctrine-migrations-bundle": "^3.4",
         "doctrine/orm": "^3.5",
         "paragonie/halite": "*",
         "ramsey/uuid": "^4.9",

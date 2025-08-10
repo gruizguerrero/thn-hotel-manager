@@ -3,8 +3,8 @@ doctrine:
         default_connection: default
         connections:
             default:
-                url: '%env(resolve:DATABASE_URL)%'
-                server_version: 8.0
+                url: 'mysql://%env(MYSQL_USERNAME)%:%env(MYSQL_PASSWORD)%@%env(MYSQL_HOST)%:%env(MYSQL_PORT)%/%env(MYSQL_DATABASE_NAME)%'
+                server_version: '8.0'
         types:
             uuid: App\Shared\Infrastructure\Persistence\Doctrine\MySQL\Type\UuidType
             name: App\Context\Campaign\Infrastructure\Persistence\Doctrine\MySQL\Type\NameType

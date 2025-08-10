@@ -2,7 +2,9 @@
 
 namespace App\Context\Campaign\Application\Command\CreateCampaign;
 
+use App\Context\Campaign\Domain\Write\Aggregate\ValueObject\Name;
 use App\Shared\Application\Bus\Command\Command;
+use App\Shared\Domain\ValueObject\Uuid;
 
 class CreateCampaignCommand extends Command
 {
@@ -15,6 +17,16 @@ class CreateCampaignCommand extends Command
             self::ID => $campaignId,
             self::NAME => $name
         ]);
+    }
+
+    public function id(): Uuid
+    {
+        return UUid::fromString($this->get(self::ID));
+    }
+
+    public function name(): Name
+    {
+        return Name::fromString($this->get(self::NAME));
     }
 
     protected static function stringMessageName(): string
