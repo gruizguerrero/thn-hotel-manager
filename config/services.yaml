@@ -12,6 +12,14 @@ services:
         exclude:
             - '../src/Kernel.php'
 
+    _instanceof:
+        # By default, each handler will be available to handle messages on all of your buses.
+        # To prevent dispatching a message to the wrong bus without an error,
+        # you can restrict each handler to a specific bus using the messenger.message_handler tag:
+        App\Shared\Application\Bus\Command\CommandHandlerInterface:
+            tags:
+                - { name: 'messenger.message_handler', bus: 'messenger.bus.commands'}
+
     thn.shared.application.command_bus:
         class: App\Shared\Infrastructure\Bus\Command\MessengerCommandBus
         arguments:
