@@ -4,10 +4,20 @@ services:
     _defaults:
         autowire: true
         autoconfigure: true
+        #bind:
+            #$commandBus: '@thn.shared.application.command_bus'
 
     App\:
         resource: '../src/'
         exclude:
-            - '../src/DependencyInjection/'
-            - '../src/Entity/'
             - '../src/Kernel.php'
+
+    thn.shared.application.command_bus:
+        class: App\Shared\Infrastructure\Bus\Command\MessengerCommandBus
+        arguments:
+            - '@messenger.bus.commands'
+
+    thn.shared.application.bus.add_command_bus_name_to_stamp_middleware:
+        class: App\Shared\Infrastructure\Bus\AddBusNameToStampMiddleware
+        arguments:
+            - '@messenger.bus.commands'

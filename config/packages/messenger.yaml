@@ -1,22 +1,28 @@
+parameters:
+    AMQP_TRANSPORT_DSN: '%env(AMQP_TRANSPORT_DSN)%'
+
 framework:
     messenger:
-        # Uncomment this (and the failed transport below) to send failed messages to this transport for later handling.
-        # failure_transport: failed
+        buses:
+            messenger.bus.commands:
+                default_middleware: false
+                middleware:
+                    # each time a message is handled, the Doctrine connection
+                    # is "pinged" and reconnected if it's closed. Useful
+                    # if your workers run for a long time and the database
+                    # connection is sometimes lost
+                    - doctrine_ping_connection
+                    # the dispatch_after_current_bus middleware is enabled
+                    # by default. If you're configuring your middleware manually
+                    # be sure to register dispatch_after_current_bus
+                    # before doctrine_transaction in the middleware chain.
+                    # Also, the dispatch_after_current_bus middleware must be loaded for all of the buses being used
+                    - dispatch_after_current_bus
+                    - thn.shared.application.bus.add_command_bus_name_to_stamp_middleware
+                    # ToDo. add here the doctrine transaction middleware once doctrine is configured
+                    - handle_message
 
         transports:
-            # https://symfony.com/doc/current/messenger.html#transport-configuration
-            # async: '%env(MESSENGER_TRANSPORT_DSN)%'
-            # failed: 'doctrine://default?queue_name=failed'
-            # sync: 'sync://'
 
         routing:
-            # Route your messages to the transports
-            # 'App\Message\YourMessage': async
 
-# when@test:
-#    framework:
-#        messenger:
-#            transports:
-#                # replace with your transport name here (e.g., my_transport: 'in-memory://')
-#                # For more Messenger testing tools, see https://github.com/zenstruck/messenger-test
-#                async: 'in-memory://'
