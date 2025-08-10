@@ -46,7 +46,7 @@ final class MessageTest extends TestCase
         $payload = [FakeMessage::A_KEY => 'someScalar'];
         $message = new FakeMessage($payload);
         $expectedMetadata = [
-            Message::NAME => (string) FakeMessage::messageName(),
+            Message::MESSAGE_NAME => (string) FakeMessage::messageName(),
             Message::MESSAGE_VERSION => FakeMessage::VERSION,
         ];
         $this->assertSame(
@@ -61,7 +61,7 @@ final class MessageTest extends TestCase
         $addedMetadata = ['correlation_id' => Uuid::generate()->value()];
 
         $expectedMetadata = [
-                Message::NAME => (string) FakeMessage::messageName(),
+                Message::MESSAGE_NAME => (string) FakeMessage::messageName(),
                 Message::MESSAGE_VERSION => FakeMessage::VERSION,
             ] + $addedMetadata;
 
@@ -75,7 +75,7 @@ final class MessageTest extends TestCase
         $addedMetadata = ['correlation_id' => Uuid::generate()->value()];
 
         $originalMetadata = [
-            Message::NAME => (string) FakeMessage::messageName(),
+            Message::MESSAGE_NAME => (string) FakeMessage::messageName(),
             Message::MESSAGE_VERSION => FakeMessage::VERSION,
         ];
 
@@ -109,7 +109,7 @@ final class MessageTest extends TestCase
         $message = new FakeMessage($aPayload, $addedMetadata);
 
         $expectedMetadata = [
-            Message::NAME => (string) FakeMessage::messageName(),
+            Message::MESSAGE_NAME => (string) FakeMessage::messageName(),
             Message::MESSAGE_VERSION => FakeMessage::VERSION,
             'correlation_id' => $correlationId,
         ];
@@ -127,7 +127,7 @@ final class MessageTest extends TestCase
         $message = new FakeMessage($aPayload, $metadataUpdatingDefaultMessageVersion);
 
         $expectedMetadata = [
-            Message::NAME => (string) FakeMessage::messageName(),
+            Message::MESSAGE_NAME => (string) FakeMessage::messageName(),
             Message::MESSAGE_VERSION => $newMessageVersion,
         ];
 

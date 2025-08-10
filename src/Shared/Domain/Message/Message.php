@@ -8,8 +8,8 @@ use InvalidArgumentException;
 abstract class Message
 {
     public const string PREFIX = 'thn';
-    public const string NAME = 'name';
-    public const MESSAGE_VERSION = 'version';
+    public const string MESSAGE_NAME = 'name';
+    public const string MESSAGE_VERSION = 'version';
     public const string PAYLOAD = 'payload';
     public const string METADATA = 'metadata';
 
@@ -18,7 +18,7 @@ abstract class Message
         $this->setPayload($payload);
 
         $defaultMetadata = [
-            self::NAME => (string)static::messageName(),
+            self::MESSAGE_NAME => (string)static::messageName(),
             self::MESSAGE_VERSION => $this->version(),
         ];
         $metadata = array_merge($defaultMetadata, $metadata);
