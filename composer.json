@@ -10,6 +10,7 @@
         "beberlei/assert": "^3.3",
         "doctrine/doctrine-bundle": "*",
         "doctrine/orm": "^3.5",
+        "paragonie/halite": "*",
         "ramsey/uuid": "^4.9",
         "symfony/amqp-messenger": "6.4.*",
         "symfony/console": "6.4.*",
