@@ -20,6 +20,7 @@ services:
             tags:
                 - { name: 'messenger.message_handler', bus: 'messenger.bus.commands'}
 
+    ### Command Bus Configuration ###
     thn.shared.application.command_bus:
         class: App\Shared\Infrastructure\Bus\Command\MessengerCommandBus
         arguments:
@@ -35,3 +36,15 @@ services:
         arguments:
             - '@doctrine'
             - 'thn'
+
+    ### Event Bus Configuration ###
+    thn.shared.application.bus.add_event_bus_name_to_stamp_middleware:
+        class: App\Shared\Infrastructure\Bus\AddBusNameToStampMiddleware
+        arguments:
+            - 'messenger.bus.events'
+
+    thn.shared.application.event_bus.handler_middleware:
+        class: Symfony\Component\Messenger\Middleware\HandleMessageMiddleware
+        arguments:
+            - '@messenger.bus.events.messenger.handlers_locator'
+            - true

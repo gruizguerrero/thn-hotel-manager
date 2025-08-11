@@ -3,7 +3,18 @@ parameters:
 
 framework:
     messenger:
+        default_bus: messenger.bus.events
+
         buses:
+            messenger.bus.events:
+                default_middleware: false
+                middleware:
+                    - doctrine_ping_connection
+                    - dispatch_after_current_bus
+                    - thn.shared.application.bus.add_event_bus_name_to_stamp_middleware
+                    - thn.shared.application.event_bus.handler_middleware
+                    - send_message
+
             messenger.bus.commands:
                 default_middleware: false
                 middleware:
@@ -14,6 +25,18 @@ framework:
                     - handle_message
 
         transports:
+            async_domain_event:
+                dsn: '%AMQP_TRANSPORT_DSN%'
+                options:
+                    exchange:
+                        name: domain_event_exchange
+                        type: topic
+                    queues:
+                        ha_async_domain_event_queue:
+                            binding_keys:
+                                - 'thn.campaign_manager.domain_event.#'
+                # might define retry strategy here if needed
 
         routing:
+            App\Shared\Domain\Write\Event\DomainEvent: async_domain_event
 
