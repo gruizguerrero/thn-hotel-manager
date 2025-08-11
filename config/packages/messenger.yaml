@@ -7,19 +7,10 @@ framework:
             messenger.bus.commands:
                 default_middleware: false
                 middleware:
-                    # each time a message is handled, the Doctrine connection
-                    # is "pinged" and reconnected if it's closed. Useful
-                    # if your workers run for a long time and the database
-                    # connection is sometimes lost
                     - doctrine_ping_connection
-                    # the dispatch_after_current_bus middleware is enabled
-                    # by default. If you're configuring your middleware manually
-                    # be sure to register dispatch_after_current_bus
-                    # before doctrine_transaction in the middleware chain.
-                    # Also, the dispatch_after_current_bus middleware must be loaded for all of the buses being used
                     - dispatch_after_current_bus
                     - thn.shared.application.bus.add_command_bus_name_to_stamp_middleware
-                    # ToDo. add here the doctrine transaction middleware once doctrine is configured
+                    - thn.shared.application.bus.doctrine_transaction_middleware
                     - handle_message
 
         transports:

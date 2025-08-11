@@ -29,3 +29,9 @@ services:
         class: App\Shared\Infrastructure\Bus\AddBusNameToStampMiddleware
         arguments:
             - '@messenger.bus.commands'
+
+    thn.shared.application.bus.doctrine_transaction_middleware:
+        class: Symfony\Bridge\Doctrine\Messenger\DoctrineTransactionMiddleware
+        arguments:
+            - '@doctrine'
+            - 'thn'
