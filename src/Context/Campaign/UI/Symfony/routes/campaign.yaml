@@ -1,0 +1,4 @@
+post_campaign:
+  path: /campaigns
+  controller: App\Context\Campaign\UI\Controller\PostCampaignController
+  methods:  [POST]

@@ -18,7 +18,7 @@ abstract class Message
         $this->setPayload($payload);
 
         $defaultMetadata = [
-            self::MESSAGE_NAME => (string)static::messageName(),
+            self::MESSAGE_NAME => (string) static::messageName(),
             self::MESSAGE_VERSION => $this->version(),
         ];
         $metadata = array_merge($defaultMetadata, $metadata);

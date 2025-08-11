@@ -70,7 +70,7 @@ class MessageName extends StringValueObject
     private function genericFormatExceptionMessage(string $value): string
     {
         return sprintf(
-            'The message with name <%s> is invalid. Supported format: common_platform.bc.type.module.action',
+            'The message with name <%s> is invalid. Supported format: thn.bc.type.module.action',
             $value
         );
     }

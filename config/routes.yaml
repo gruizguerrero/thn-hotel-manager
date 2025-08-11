@@ -1,2 +1,5 @@
 health:
     resource: '../src/Shared/UI/Symfony/health.yaml'
+
+campaign:
+    resource: '../src/Context/Campaign/UI/Symfony/routes/campaign.yaml'

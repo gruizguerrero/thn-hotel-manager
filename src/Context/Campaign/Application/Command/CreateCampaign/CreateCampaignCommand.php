@@ -33,7 +33,7 @@ class CreateCampaignCommand extends Command
 
     protected static function stringMessageName(): string
     {
-        return 'command.campaign.create';
+        return 'thn.command.campaign.create';
     }
 
     protected function version(): string

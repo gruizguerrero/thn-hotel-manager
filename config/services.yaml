@@ -4,8 +4,8 @@ services:
     _defaults:
         autowire: true
         autoconfigure: true
-        #bind:
-            #$commandBus: '@thn.shared.application.command_bus'
+        bind:
+            $commandBus: '@thn.shared.application.command_bus'
 
     App\:
         resource: '../src/'
@@ -28,7 +28,7 @@ services:
     thn.shared.application.bus.add_command_bus_name_to_stamp_middleware:
         class: App\Shared\Infrastructure\Bus\AddBusNameToStampMiddleware
         arguments:
-            - '@messenger.bus.commands'
+            - 'messenger.bus.commands'
 
     thn.shared.application.bus.doctrine_transaction_middleware:
         class: Symfony\Bridge\Doctrine\Messenger\DoctrineTransactionMiddleware
