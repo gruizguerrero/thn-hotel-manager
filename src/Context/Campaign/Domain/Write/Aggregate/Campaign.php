@@ -2,15 +2,15 @@
 
 namespace App\Context\Campaign\Domain\Write\Aggregate;
 
+use App\Context\Campaign\Domain\Write\Aggregate\ValueObject\Name;
 use App\Shared\Domain\ValueObject\Uuid;
 use App\Shared\Domain\Write\Aggregate\AggregateRoot;
 
 class Campaign extends AggregateRoot
 {
-    private string $name;
-    private string $lastName;
+    private Name $name;
 
-    public static function create(Uuid $id, string $name): self
+    public static function create(Uuid $id, Name $name): self
     {
         $campaign = new self($id);
         $campaign->name = $name;
@@ -18,7 +18,7 @@ class Campaign extends AggregateRoot
         return $campaign;
     }
 
-    public function name(): string
+    public function name(): Name
     {
         return $this->name;
     }

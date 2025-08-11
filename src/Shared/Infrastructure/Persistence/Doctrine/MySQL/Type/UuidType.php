@@ -25,7 +25,7 @@ class UuidType extends Type
 
     public function convertToDatabaseValue($value, AbstractPlatform $platform): ?string
     {
-        return !is_null($value) ? StringToBin::transformUuid($value->value()): null;
+        return !is_null($value) ? StringToBin::transformUuid($value->value()) : null;
     }
 
     public function getSQLDeclaration(array $column, AbstractPlatform $platform): string

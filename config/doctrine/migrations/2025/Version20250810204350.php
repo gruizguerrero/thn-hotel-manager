@@ -17,7 +17,7 @@ final class Version20250810204350 extends AbstractMigration
     public function up(Schema $schema): void
     {
         $this->addSql('CREATE TABLE campaign (
-            id CHAR(36) NOT NULL COMMENT \'(DC2Type:uuid)\',
+            id BINARY(16) NOT NULL COMMENT \'(DC2Type:uuid)\',
             name VARCHAR(255) NOT NULL,
             PRIMARY KEY(id)
         ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB');

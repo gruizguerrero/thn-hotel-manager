@@ -1,0 +1,5 @@
+services:
+  _defaults:
+    public: true
+
+  test.App\Context\Campaign\Infrastructure\Persistence\Doctrine\MySQL\Repository\DoctrineCampaignRepository: '@App\Context\Campaign\Infrastructure\Persistence\Doctrine\MySQL\Repository\DoctrineCampaignRepository'

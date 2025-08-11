@@ -3,12 +3,11 @@ doctrine:
         default_connection: default
         connections:
             default:
-                url: 'mysql://%env(MYSQL_USERNAME)%:%env(MYSQL_PASSWORD)%@%env(MYSQL_HOST)%:%env(MYSQL_PORT)%/%env(MYSQL_DATABASE_NAME)%'
+                url: 'mysql://default_user:default_password@mysql:3306/campaign_manager'
                 server_version: '8.0'
         types:
             uuid: App\Shared\Infrastructure\Persistence\Doctrine\MySQL\Type\UuidType
             name: App\Context\Campaign\Infrastructure\Persistence\Doctrine\MySQL\Type\NameType
-
     orm:
         auto_generate_proxy_classes: true
         enable_lazy_ghost_objects: true
