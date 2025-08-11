@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Unit\Shared\Domain\Write\Event;
 
-
+use App\Shared\Domain\Service\UuidGenerator;
 use App\Shared\Domain\ValueObject\Uuid;
 use App\Shared\Domain\Write\Event\DomainEvent;
 use App\Tests\Unit\Shared\Domain\Write\Aggregate\FakeAggregateRoot;
@@ -15,7 +17,7 @@ final class FakeDomainEvent extends DomainEvent
     {
         return self::fromPayload(
             [
-                self::AGGREGATE_ROOT_ID => $aggregateRoot ? $aggregateRoot->id()->value() : UuidStub::random()->value(),
+                self::AGGREGATE_ROOT_ID => $aggregateRoot ? $aggregateRoot->id()->value() : UuidGenerator::generate()->value(),
                 self::A_FIELD_KEY => $aggregateRoot ? $aggregateRoot->aField() : 'a_value',
             ]
         );

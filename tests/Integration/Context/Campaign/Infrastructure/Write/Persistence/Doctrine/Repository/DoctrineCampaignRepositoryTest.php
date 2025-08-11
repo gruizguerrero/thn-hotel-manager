@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Integration\Context\Campaign\Infrastructure\Write\Persistence\Doctrine\Repository;
 
 use App\Context\Campaign\Domain\Write\Aggregate\Campaign;

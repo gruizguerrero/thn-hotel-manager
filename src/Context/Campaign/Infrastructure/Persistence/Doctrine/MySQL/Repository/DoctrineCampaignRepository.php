@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Context\Campaign\Infrastructure\Persistence\Doctrine\MySQL\Repository;
 
 use App\Context\Campaign\Domain\Write\Aggregate\Campaign;

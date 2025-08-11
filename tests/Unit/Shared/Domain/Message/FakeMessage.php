@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Tests\Unit\Shared\Domain\Message;
+declare(strict_types=1);
 
+namespace App\Tests\Unit\Shared\Domain\Message;
 
 use App\Shared\Domain\Message\Message;
 

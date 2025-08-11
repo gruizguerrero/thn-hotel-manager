@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Tests\Unit\Context\Campaign\Domain\Write\Aggregate;
 
 use App\Context\Campaign\Domain\Write\Aggregate\Campaign;

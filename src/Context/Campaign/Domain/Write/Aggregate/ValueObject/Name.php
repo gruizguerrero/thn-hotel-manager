@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Context\Campaign\Domain\Write\Aggregate\ValueObject;
 
 use App\Shared\Domain\Service\Assert;
