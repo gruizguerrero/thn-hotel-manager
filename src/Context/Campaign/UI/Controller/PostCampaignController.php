@@ -3,7 +3,9 @@
 namespace App\Context\Campaign\UI\Controller;
 
 use App\Context\Campaign\Application\Command\CreateCampaign\CreateCampaignCommand;
+use App\Context\Campaign\Domain\Write\Event\CampaignCreated;
 use App\Shared\Application\Bus\Command\CommandBusInterface;
+use App\Shared\Application\Bus\Event\EventBusInterface;
 use App\Shared\UI\Controller\ApiController;
 use App\Shared\UI\Response\ApiHttpResponse;
 use App\Shared\UI\Response\HttpResponseCode;
@@ -11,9 +13,11 @@ use Symfony\Component\HttpFoundation\Request;
 
 final class PostCampaignController extends ApiController
 {
-    public function __construct(CommandBusInterface $commandBus)
-    {
-        parent::__construct($commandBus);
+    public function __construct(
+        CommandBusInterface $commandBus,
+        EventBusInterface $eventBus
+    ){
+        parent::__construct($commandBus, $eventBus);
     }
 
     public function __invoke(Request $request): ApiHttpResponse

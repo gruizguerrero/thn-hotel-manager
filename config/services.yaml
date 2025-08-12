@@ -5,6 +5,7 @@ services:
         autowire: true
         autoconfigure: true
         bind:
+            $eventBus: '@thn.shared.application.event_bus'
             $commandBus: '@thn.shared.application.command_bus'
 
     App\:
@@ -19,6 +20,9 @@ services:
         App\Shared\Application\Bus\Command\CommandHandlerInterface:
             tags:
                 - { name: 'messenger.message_handler', bus: 'messenger.bus.commands'}
+
+        App\Shared\Domain\Message\Message:
+            tags: ['message']
 
     ### Command Bus Configuration ###
     thn.shared.application.command_bus:
@@ -38,6 +42,11 @@ services:
             - 'thn'
 
     ### Event Bus Configuration ###
+    thn.shared.application.event_bus:
+        class: App\Shared\Infrastructure\Bus\Event\MessengerEventBus
+        arguments:
+            - '@messenger.bus.events'
+
     thn.shared.application.bus.add_event_bus_name_to_stamp_middleware:
         class: App\Shared\Infrastructure\Bus\AddBusNameToStampMiddleware
         arguments:
@@ -48,3 +57,9 @@ services:
         arguments:
             - '@messenger.bus.events.messenger.handlers_locator'
             - true
+
+    message.message_factory:
+        class: App\Shared\Domain\Message\Factory\FullyQualifiedClassNameMessageFactory
+
+    thn.shared.infrastructure.bus.event.add_amqp_stamp_middleware:
+        class: App\Shared\Infrastructure\Bus\Event\AddAmqpStampMiddleware
