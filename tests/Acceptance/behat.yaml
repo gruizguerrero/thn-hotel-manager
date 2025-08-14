@@ -1,0 +1,13 @@
+default:
+  suites:
+    health:
+      paths: [tests/Acceptance/Health]
+      contexts:
+        - App\Tests\Acceptance\ApiContext
+
+  extensions:
+    FriendsOfBehat\SymfonyExtension:
+      bootstrap: 'config/bootstrap.php'
+      kernel:
+        class: App\Kernel
+        environment: test

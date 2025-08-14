@@ -1,5 +1,8 @@
 services:
-  _defaults:
-    public: true
+    _defaults:
+        autowire: true
+        autoconfigure: true
 
-  test.App\Context\Campaign\Infrastructure\Persistence\Doctrine\MySQL\Repository\DoctrineCampaignRepository: '@App\Context\Campaign\Infrastructure\Persistence\Doctrine\MySQL\Repository\DoctrineCampaignRepository'
+    App\Tests\Acceptance\ApiContext:
+        arguments:
+            - '@kernel'
