@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Shared\Domain\Write\Event;
+namespace App\Tests\Unit\Shared\Helpers;
 
 use App\Shared\Domain\Service\UuidGenerator;
 use App\Shared\Domain\ValueObject\Uuid;
 use App\Shared\Domain\Write\Event\DomainEvent;
-use App\Tests\Unit\Shared\Domain\Write\Aggregate\FakeAggregateRoot;
 
 final class FakeDomainEvent extends DomainEvent
 {

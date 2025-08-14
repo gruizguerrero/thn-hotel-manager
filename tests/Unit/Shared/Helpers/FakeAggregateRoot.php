@@ -2,11 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Shared\Domain\Write\Aggregate;
+namespace App\Tests\Unit\Shared\Helpers;
 
 use App\Shared\Domain\ValueObject\Uuid;
 use App\Shared\Domain\Write\Aggregate\AggregateRoot;
-use App\Tests\Unit\Shared\Domain\Write\Event\FakeDomainEvent;
 
 final class FakeAggregateRoot extends AggregateRoot
 {

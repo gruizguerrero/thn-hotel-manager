@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Shared\Domain;
+namespace App\Tests\Unit\Shared\Helpers;
 
 use App\Shared\Domain\TypedCollection;
 

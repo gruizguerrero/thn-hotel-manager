@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Shared\Domain;
 
+use App\Tests\Unit\Shared\Helpers\FakeCollectionElement;
+use App\Tests\Unit\Shared\Helpers\FakeTypedCollection;
 use Assert\AssertionFailedException;
 use PHPUnit\Framework\TestCase;
 

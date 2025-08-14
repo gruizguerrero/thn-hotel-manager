@@ -6,6 +6,7 @@ namespace App\Tests\Unit\Shared\Domain\Message;
 
 use App\Shared\Domain\Message\Message;
 use App\Shared\Domain\ValueObject\Uuid;
+use App\Tests\Unit\Shared\Helpers\FakeMessage;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use stdClass;
