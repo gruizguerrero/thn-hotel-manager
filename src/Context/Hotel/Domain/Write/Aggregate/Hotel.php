@@ -7,7 +7,6 @@ namespace App\Context\Hotel\Domain\Write\Aggregate;
 use App\Context\Hotel\Domain\Write\Aggregate\ValueObject\City;
 use App\Context\Hotel\Domain\Write\Aggregate\ValueObject\Country;
 use App\Context\Hotel\Domain\Write\Aggregate\ValueObject\Name;
-use App\Context\Hotel\Domain\Write\Aggregate\ValueObject\NumberOfRooms;
 use App\Context\Hotel\Domain\Write\Entity\Room;
 use App\Context\Hotel\Domain\Write\Entity\Rooms;
 use App\Context\Hotel\Domain\Write\Event\HotelCreated;
@@ -20,7 +19,6 @@ class Hotel extends AggregateRoot
     private Name $name;
     private City $city;
     private Country $country;
-    private NumberOfRooms $numberOfRooms;
 
     /** @var Rooms $rooms */
     private $rooms;
@@ -39,7 +37,6 @@ class Hotel extends AggregateRoot
         $hotel->city = $city;
         $hotel->country = $country;
         $hotel->rooms = Rooms::createEmpty();
-        $hotel->numberOfRooms = new NumberOfRooms($hotel->rooms->count());
         $hotel->createdAt = new DateTimeImmutable();
         $hotel->updatedAt = null;
 

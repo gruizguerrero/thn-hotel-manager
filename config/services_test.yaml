@@ -1,8 +1,12 @@
 services:
     _defaults:
+        public: true
         autowire: true
         autoconfigure: true
 
     App\Tests\Acceptance\ApiContext:
         arguments:
             - '@kernel'
+
+    test.App\Context\Campaign\Infrastructure\Persistence\Doctrine\MySQL\Repository\DoctrineCampaignRepository: '@App\Context\Campaign\Infrastructure\Persistence\Doctrine\MySQL\Repository\DoctrineCampaignRepository'
+    test.App\Context\Hotel\Domain\Write\Repository\HotelRepository: '@App\Context\Hotel\Infrastructure\Persistence\Doctrine\MySQL\Repository\DoctrineHotelRepository'

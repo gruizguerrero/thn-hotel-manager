@@ -7,7 +7,9 @@ doctrine:
                 server_version: '8.0'
         types:
             uuid: App\Shared\Infrastructure\Persistence\Doctrine\MySQL\Type\UuidType
-            name: App\Context\Campaign\Infrastructure\Persistence\Doctrine\MySQL\Type\NameType
+            name: App\Context\Hotel\Infrastructure\Persistence\Doctrine\MySQL\Type\NameType
+            city: App\Context\Hotel\Infrastructure\Persistence\Doctrine\MySQL\Type\CityType
+            country: App\Context\Hotel\Infrastructure\Persistence\Doctrine\MySQL\Type\CountryType
     orm:
         auto_generate_proxy_classes: true
         enable_lazy_ghost_objects: true
@@ -21,4 +23,9 @@ doctrine:
                         type: xml
                         dir: '%kernel.project_dir%/src/Context/Campaign/Infrastructure/Persistence/Doctrine/MySQL/Mapping'
                         prefix: 'App\Context\Campaign\Domain\Write'
+                        is_bundle: false
+                    Hotel:
+                        type: xml
+                        dir: '%kernel.project_dir%/src/Context/Hotel/Infrastructure/Persistence/Doctrine/MySQL/Mapping'
+                        prefix: 'App\Context\Hotel\Domain\Write'
                         is_bundle: false

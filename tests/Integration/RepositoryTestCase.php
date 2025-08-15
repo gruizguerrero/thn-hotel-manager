@@ -13,6 +13,7 @@ abstract class RepositoryTestCase extends BaseKernelTestCase
     {
         self::bootKernel();
         parent::setUp();
+        $this->purge();
     }
 
     abstract protected function purge(): void;
