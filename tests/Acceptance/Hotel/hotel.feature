@@ -20,11 +20,7 @@ Feature: Fetch Hotel Details
         "id": "f4a8f92c-5208-4568-869c-3bc50bb28350",
         "name": "NH Collection",
         "city": "Madrid",
-        "country": "ES",
-        "available_rooms": [
-          {"number": "101", "type": "single"},
-          {"number": "102", "type": "double"}
-        ]
+        "country": "ES"
       },
       "metadata": []
     }

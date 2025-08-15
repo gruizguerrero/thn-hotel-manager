@@ -7,6 +7,7 @@ services:
         bind:
             $eventBus: '@thn.shared.application.event_bus'
             $commandBus: '@thn.shared.application.command_bus'
+            $queryBus: '@thn.shared.application.query_bus'
 
     App\:
         resource: '../src/'
@@ -19,7 +20,10 @@ services:
         # you can restrict each handler to a specific bus using the messenger.message_handler tag:
         App\Shared\Application\Bus\Command\CommandHandlerInterface:
             tags:
-                - { name: 'messenger.message_handler', bus: 'messenger.bus.commands'}
+                - { name: messenger.message_handler, bus: messenger.bus.commands }
+
+        App\Shared\Application\Bus\Query\QueryHandlerInterface:
+            tags: [ { name: messenger.message_handler, bus: messenger.bus.queries } ]
 
         App\Shared\Domain\Message\Message:
             tags: ['message']
@@ -57,6 +61,12 @@ services:
         arguments:
             - '@messenger.bus.events.messenger.handlers_locator'
             - true
+
+    ### Query Bus Configuration ###
+    thn.shared.application.query_bus:
+        class: App\Shared\Infrastructure\Bus\Query\MessengerQueryBus
+        arguments:
+            - '@messenger.bus.queries'
 
     message.message_factory:
         class: App\Shared\Domain\Message\Factory\FullyQualifiedClassNameMessageFactory

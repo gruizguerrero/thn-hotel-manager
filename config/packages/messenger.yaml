@@ -24,6 +24,11 @@ framework:
                     - thn.shared.application.bus.doctrine_transaction_middleware
                     - handle_message
 
+            messenger.bus.queries:
+                default_middleware: false
+                middleware:
+                    - handle_message
+
         transports:
             async_domain_event:
                 dsn: '%env(AMQP_TRANSPORT_DSN)%'

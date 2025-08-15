@@ -16,3 +16,4 @@ default:
       kernel:
         class: App\Kernel
         environment: test
+        
