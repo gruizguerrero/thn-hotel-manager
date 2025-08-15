@@ -1,0 +1,4 @@
+get_hotel:
+  path: /hotels/{hotelId}
+  controller: App\Context\Hotel\UI\Controller\GetHotelController
+  methods:  [GET]

@@ -3,3 +3,6 @@ health:
 
 campaign:
     resource: '../src/Context/Campaign/UI/Symfony/routes/campaign.yaml'
+
+hotel:
+    resource: '../src/Context/Hotel/UI/Symfony/routes/hotel.yaml'

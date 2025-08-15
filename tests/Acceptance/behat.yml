@@ -5,6 +5,11 @@ default:
       contexts:
         - App\Tests\Acceptance\ApiContext
 
+    hotel:
+      paths: [tests/Acceptance/Hotel]
+      contexts:
+        - App\Tests\Acceptance\ApiContext
+
   extensions:
     FriendsOfBehat\SymfonyExtension:
       bootstrap: 'config/bootstrap.php'
