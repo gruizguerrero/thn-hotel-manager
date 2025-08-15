@@ -3,7 +3,11 @@
 namespace App\Tests\Unit\Context\Hotel\Domain\Write\Aggregate;
 
 use App\Context\Hotel\Domain\Write\Aggregate\Hotel;
+use App\Context\Hotel\Domain\Write\Aggregate\ValueObject\City;
+use App\Context\Hotel\Domain\Write\Aggregate\ValueObject\Country;
+use App\Context\Hotel\Domain\Write\Aggregate\ValueObject\Name;
 use App\Context\Hotel\Domain\Write\Entity\Room;
+use App\Context\Hotel\Domain\Write\Event\HotelCreated;
 use App\Shared\Domain\ValueObject\Uuid;
 use PHPUnit\Framework\TestCase;
 
@@ -12,9 +16,9 @@ final class HotelTest extends TestCase
     public function test_hotel_is_created(): void
     {
         $id = Uuid::generate();
-        $name = 'NH Collection';
-        $city = 'Madrid';
-        $country = 'Spain';
+        $name = Name::fromString('NH Collection');
+        $city = City::fromString('Madrid');
+        $country = Country::fromString('ES');
 
         $hotel = Hotel::create(
             $id,
@@ -24,18 +28,25 @@ final class HotelTest extends TestCase
         );
 
         $this->assertTrue($id->equalsTo($hotel->id()));
-        $this->assertEquals($name, $hotel->name());
-        $this->assertEquals($city, $hotel->city());
-        $this->assertEquals($country, $hotel->country());
+        $this->assertTrue($name->equalsTo($hotel->name()));
+        $this->assertTrue($city->equalsTo($hotel->city()));
+        $this->assertTrue($country->equalsTo($hotel->country()));
         $this->assertCount(0, $hotel->rooms());
+        $this->assertNotNull($hotel->createdAt());
+        $this->assertNull($hotel->updatedAt());
+
+        $events = $hotel->pullEvents();
+
+        $this->assertCount(1, $events);
+        $this->assertInstanceOf(HotelCreated::class, $events->first());
     }
 
     public function test_add_room(): void
     {
         $id = Uuid::generate();
-        $name = 'NH Collection';
-        $city = 'Madrid';
-        $country = 'Spain';
+        $name = Name::fromString('NH Collection');
+        $city = City::fromString('Madrid');
+        $country = Country::fromString('ES');
 
         $hotel = Hotel::create(
             $id,
