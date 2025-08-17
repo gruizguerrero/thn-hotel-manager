@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Acceptance;
 
-use App\Tests\Fixtures\DataLoader\MySQL\HotelFixtures;
+use App\Tests\DataFixtures\DataLoader\MySQL\HotelFixtures;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 final class HotelContext extends AggregateContext

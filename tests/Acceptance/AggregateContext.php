@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Tests\Acceptance;
 
 use App\Shared\Infrastructure\Persistence\Doctrine\MySQL\Repository\AggregateRepository;
-use App\Tests\Fixtures\DataLoader\MySQL\Fixtures;
-use App\Tests\Fixtures\Purger\CustomPurger;
+use App\Tests\DataFixtures\DataLoader\MySQL\Fixtures;
+use App\Tests\DataFixtures\Purger\CustomPurger;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Loader;

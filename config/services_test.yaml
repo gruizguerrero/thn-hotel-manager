@@ -2,9 +2,17 @@ services:
     _defaults:
         public: true
 
+    App\Tests\DataFixtures\:
+        resource: '../tests/DataFixtures/*'
+
     _instanceof:
-        App\Tests\Fixtures\DataLoader\MySQL\Fixtures:
+        App\Tests\DataFixtures\DataLoader\MySQL\Fixtures:
             tags: [ 'doctrine.fixture.orm' ]
+
+    doctrine.fixtures.purger.orm_purger_factory:
+        class: App\Tests\DataFixtures\Purger\CustomPurgerFactory
+        tags:
+            - { name: 'doctrine.fixtures.purger_factory', alias: 'default' }
 
     App\Tests\Acceptance\ApiContext:
         arguments:
