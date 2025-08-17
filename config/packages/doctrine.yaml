@@ -29,3 +29,8 @@ doctrine:
                         dir: '%kernel.project_dir%/src/Context/Hotel/Infrastructure/Persistence/Doctrine/MySQL/Mapping'
                         prefix: 'App\Context\Hotel\Domain\Write'
                         is_bundle: false
+                    Booking:
+                        type: xml
+                        dir: '%kernel.project_dir%/src/Context/Booking/Infrastructure/Persistence/Doctrine/MySQL/Mapping'
+                        prefix: 'App\Context\Booking\Domain\Write'
+                        is_bundle: false

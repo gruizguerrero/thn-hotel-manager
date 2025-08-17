@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+    https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="App\Context\Booking\Domain\Write\Aggregate\Booking" table="bookings">
+        <id name="id" column="id" type="uuid" />
+        <id name="hotelId" column="hotel_id" type="uuid" />
+        <id name="userId" column="user_id" type="uuid" />
+        <field name="checkInDate" column="check_in_date" type="datetime_immutable" />
+        <field name="checkOutDate" column="check_out_date" type="datetime_immutable" />
+        <field name="createdAt" column="created_at" type="datetime_immutable" />
+        <field name="updatedAt" column="updated_at" type="datetime_immutable" nullable="true" />
+
+        <many-to-many field="rooms" target-entity="App\Context\Booking\Domain\Write\Entity\BookingRoom" fetch="EAGER">
+            <join-table name="booking_rooms_assignment">
+                <join-columns>
+                    <join-column name="booking_id" referenced-column-name="id" />
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="room_id" referenced-column-name="id" />
+                </inverse-join-columns>
+            </join-table>
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </many-to-many>
+    </entity>
+</doctrine-mapping>

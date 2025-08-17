@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Context\Booking\Domain\Write\Event;
 
-use App\Context\Booking\Domain\Write\Aggregate\ValueObject\RoomIds;
+use App\Context\Booking\Domain\Write\Entity\ValueObject\RoomIds;
 use App\Shared\Domain\ValueObject\Uuid;
 use App\Shared\Domain\Write\Event\DomainEvent;
 use DateTimeImmutable;

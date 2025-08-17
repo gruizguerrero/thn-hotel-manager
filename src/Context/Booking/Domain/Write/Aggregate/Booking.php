@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Context\Booking\Domain\Write\Aggregate;
 
-use App\Context\Booking\Domain\Write\Aggregate\ValueObject\RoomIds;
+use App\Context\Booking\Domain\Write\Entity\BookingRoom;
+use App\Context\Booking\Domain\Write\Entity\BookingRooms;
+use App\Context\Booking\Domain\Write\Entity\ValueObject\RoomIds;
 use App\Context\Booking\Domain\Write\Event\BookingCreated;
 use App\Context\Booking\Domain\Write\Event\RoomBooked;
 use App\Shared\Domain\ValueObject\Uuid;
@@ -20,7 +22,8 @@ class Booking extends AggregateRoot
     private DateTimeImmutable $createdAt;
     private ?DateTimeImmutable $updatedAt;
 
-    private $roomIds;
+    /** @var BookingRooms $rooms */
+    private $rooms;
 
     public static function bookRooms(
         Uuid $bookingId,
@@ -37,9 +40,16 @@ class Booking extends AggregateRoot
         $booking->checkOutDate = $checkOutDate;
         $booking->createdAt = new DateTimeImmutable();
         $booking->updatedAt = null;
-        $booking->roomIds = $roomIds;
+        $booking->rooms = BookingRooms::createEmpty();
 
         foreach ($roomIds as $roomId) {
+            $bookingRoom = BookingRoom::create(
+                Uuid::generate(),
+                $roomId
+            );
+
+            $booking->rooms->add($bookingRoom);
+
             $booking->recordEvent(RoomBooked::create(
                 $booking->id(),
                 $booking->userId,
@@ -56,7 +66,7 @@ class Booking extends AggregateRoot
             $booking->checkInDate,
             $booking->checkOutDate,
             $booking->hotelId,
-            $booking->roomIds
+            $roomIds
         ));
 
         return $booking;
