@@ -13,3 +13,8 @@ test-unit:
 .PHONY: test-acceptance
 test-acceptance:
 	@docker compose exec php-fpm /bin/bash -c "XDEBUG_MODE=debug XDEBUG_CONFIG='idekey=PHPSTORM' bin/behat -c tests/Acceptance/behat.yml --colors ${parameters}"
+
+
+.PHONY: load-fixtures
+load-fixtures:
+	@docker compose exec php-fpm /bin/bash -c "XDEBUG_MODE=off bin/console doctrine:fixtures:load --env=test -n"

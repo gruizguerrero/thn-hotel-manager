@@ -9,6 +9,7 @@ default:
       paths: [tests/Acceptance/Hotel]
       contexts:
         - App\Tests\Acceptance\ApiContext
+        - App\Tests\Acceptance\HotelContext
 
   extensions:
     FriendsOfBehat\SymfonyExtension:
@@ -16,4 +17,3 @@ default:
       kernel:
         class: App\Kernel
         environment: test
-        

@@ -4,6 +4,7 @@ Feature: Fetch Hotel Details
   I need to be able to fetch a hotel's basic details and its available rooms
 
   Scenario: It receives a valid request to fetch hotel details
+    Given I have hotels
     #Given a hotel exists with the following details:
     #  | name           | city   | country |
     #  | NH Collection  | Madrid | ES      |

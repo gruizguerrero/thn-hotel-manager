@@ -1,10 +1,16 @@
 services:
     _defaults:
         public: true
-        autowire: true
-        autoconfigure: true
+
+    _instanceof:
+        App\Tests\Fixtures\DataLoader\MySQL\Fixtures:
+            tags: [ 'doctrine.fixture.orm' ]
 
     App\Tests\Acceptance\ApiContext:
+        arguments:
+            - '@kernel'
+
+    App\Tests\Acceptance\HotelContext:
         arguments:
             - '@kernel'
 
