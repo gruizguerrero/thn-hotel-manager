@@ -8,7 +8,7 @@ use App\Context\Hotel\Application\Query\FindHotel\FindHotelQueryResponse;
 use App\Shared\Application\Bus\Query\Response;
 use App\Shared\UI\Response\HttpResponseTransformer;
 
-class HotelResponseTransformer extends HttpResponseTransformer
+final class HotelResponseTransformer extends HttpResponseTransformer
 {
     protected function transformData(Response $queryResponse): array
     {
@@ -17,10 +17,10 @@ class HotelResponseTransformer extends HttpResponseTransformer
         }
 
         return [
-            'id' => $queryResponse->id(),
-            'name' => $queryResponse->name(),
-            'city' => $queryResponse->city(),
-            'country' => $queryResponse->country(),
+            FindHotelQueryResponse::ID => $queryResponse->id(),
+            FindHotelQueryResponse::NAME => $queryResponse->name(),
+            FindHotelQueryResponse::CITY => $queryResponse->city(),
+            FindHotelQueryResponse::COUNTRY => $queryResponse->country(),
         ];
     }
 
