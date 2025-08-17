@@ -11,6 +11,12 @@ default:
         - App\Tests\Acceptance\ApiContext
         - App\Tests\Acceptance\HotelContext
 
+    booking:
+        paths: [tests/Acceptance/Booking]
+        contexts:
+            - App\Tests\Acceptance\ApiContext
+            - App\Tests\Acceptance\BookingContext
+
   extensions:
     FriendsOfBehat\SymfonyExtension:
       bootstrap: 'config/bootstrap.php'

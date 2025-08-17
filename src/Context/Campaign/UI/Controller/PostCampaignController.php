@@ -6,6 +6,7 @@ use App\Context\Campaign\Application\Command\CreateCampaign\CreateCampaignComman
 use App\Context\Campaign\Domain\Write\Event\CampaignCreated;
 use App\Shared\Application\Bus\Command\CommandBusInterface;
 use App\Shared\Application\Bus\Event\EventBusInterface;
+use App\Shared\Application\Bus\Query\QueryBusInterface;
 use App\Shared\UI\Controller\ApiController;
 use App\Shared\UI\Response\ApiHttpResponse;
 use App\Shared\UI\Response\HttpResponseCode;
@@ -15,9 +16,10 @@ final class PostCampaignController extends ApiController
 {
     public function __construct(
         CommandBusInterface $commandBus,
-        EventBusInterface $eventBus
+        EventBusInterface $eventBus,
+        QueryBusInterface $queryBus,
     ){
-        parent::__construct($commandBus, $eventBus);
+        parent::__construct($commandBus, $eventBus, $queryBus);
     }
 
     public function __invoke(Request $request): ApiHttpResponse

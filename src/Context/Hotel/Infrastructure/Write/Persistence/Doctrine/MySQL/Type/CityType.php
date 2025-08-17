@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Context\Hotel\Infrastructure\Persistence\Doctrine\MySQL\Type;
+namespace App\Context\Hotel\Infrastructure\Write\Persistence\Doctrine\MySQL\Type;
 
-use App\Context\Hotel\Domain\Write\Aggregate\ValueObject\Country;
+use App\Context\Hotel\Domain\Write\Aggregate\ValueObject\City;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\StringType;
 
-class CountryType extends StringType
+class CityType extends StringType
 {
     public function convertToDatabaseValue($value, AbstractPlatform $platform): ?string
     {
@@ -19,17 +19,17 @@ class CountryType extends StringType
         return $value->value();
     }
 
-    public function convertToPHPValue($value, AbstractPlatform $platform): ?Country
+    public function convertToPHPValue($value, AbstractPlatform $platform): ?City
     {
         if (is_null($value)) {
             return null;
         }
 
-        return Country::fromString($value);
+        return City::fromString($value);
     }
 
     public function getName(): string
     {
-        return 'country';
+        return 'city';
     }
 }

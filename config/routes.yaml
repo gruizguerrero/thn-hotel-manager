@@ -6,3 +6,6 @@ campaign:
 
 hotel:
     resource: '../src/Context/Hotel/UI/Symfony/routes/hotel.yaml'
+
+booking:
+    resource: '../src/Context/Booking/UI/Symfony/routes/booking.yaml'

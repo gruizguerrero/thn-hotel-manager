@@ -22,5 +22,9 @@ services:
         arguments:
             - '@kernel'
 
+    App\Tests\Acceptance\BookingContext:
+        arguments:
+            - '@kernel'
+
     test.App\Context\Campaign\Infrastructure\Persistence\Doctrine\MySQL\Repository\DoctrineCampaignRepository: '@App\Context\Campaign\Infrastructure\Persistence\Doctrine\MySQL\Repository\DoctrineCampaignRepository'
-    test.App\Context\Hotel\Domain\Write\Repository\HotelRepository: '@App\Context\Hotel\Infrastructure\Persistence\Doctrine\MySQL\Repository\DoctrineHotelRepository'
+    test.App\Context\Hotel\Domain\Write\Repository\HotelRepository: '@App\Context\Hotel\Infrastructure\Write\Persistence\Doctrine\MySQL\Repository\DoctrineHotelRepository'

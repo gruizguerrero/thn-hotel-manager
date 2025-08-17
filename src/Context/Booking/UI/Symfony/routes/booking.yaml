@@ -1,0 +1,4 @@
+post_booking:
+  path: /bookings
+  controller: App\Context\Booking\UI\Controller\PostBookingController
+  methods:  [POST]

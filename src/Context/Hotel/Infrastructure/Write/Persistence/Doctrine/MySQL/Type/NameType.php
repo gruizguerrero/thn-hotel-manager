@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Context\Hotel\Infrastructure\Persistence\Doctrine\MySQL\Type;
+namespace App\Context\Hotel\Infrastructure\Write\Persistence\Doctrine\MySQL\Type;
 
 use App\Context\Hotel\Domain\Write\Aggregate\ValueObject\Name;
 use Doctrine\DBAL\Platforms\AbstractPlatform;

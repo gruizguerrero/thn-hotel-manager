@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Context\Hotel\Infrastructure\Persistence\Doctrine\MySQL\Repository;
+namespace App\Context\Hotel\Infrastructure\Write\Persistence\Doctrine\MySQL\Repository;
 
 use App\Context\Hotel\Domain\Write\Aggregate\Hotel;
 use App\Context\Hotel\Domain\Write\Repository\HotelRepository;
