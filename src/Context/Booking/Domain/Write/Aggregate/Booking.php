@@ -6,7 +6,6 @@ namespace App\Context\Booking\Domain\Write\Aggregate;
 
 use App\Context\Booking\Domain\Write\Entity\BookingRoom;
 use App\Context\Booking\Domain\Write\Entity\BookingRooms;
-use App\Context\Booking\Domain\Write\Entity\ValueObject\RoomIds;
 use App\Context\Booking\Domain\Write\Event\BookingCreated;
 use App\Context\Booking\Domain\Write\Event\RoomBooked;
 use App\Shared\Domain\ValueObject\Uuid;
@@ -31,7 +30,7 @@ class Booking extends AggregateRoot
         Uuid $userId,
         DateTimeImmutable $checkInDate,
         DateTimeImmutable $checkOutDate,
-        RoomIds $roomIds
+        BookingRooms $bookingRooms
     ): self {
         $booking = new self($bookingId);
         $booking->hotelId = $hotelId;
@@ -40,23 +39,17 @@ class Booking extends AggregateRoot
         $booking->checkOutDate = $checkOutDate;
         $booking->createdAt = new DateTimeImmutable();
         $booking->updatedAt = null;
-        $booking->rooms = BookingRooms::createEmpty();
+        $booking->rooms = $bookingRooms;
 
-        foreach ($roomIds as $roomId) {
-            $bookingRoom = BookingRoom::create(
-                Uuid::generate(),
-                $roomId
-            );
-
-            $booking->rooms->add($bookingRoom);
-
+        /** @var BookingRoom $room */
+        foreach ($bookingRooms as $room) {
             $booking->recordEvent(RoomBooked::create(
                 $booking->id(),
                 $booking->userId,
                 $booking->checkInDate,
                 $booking->checkOutDate,
                 $booking->hotelId,
-                $roomId
+                $room->roomId()
             ));
         }
 
@@ -66,9 +59,14 @@ class Booking extends AggregateRoot
             $booking->checkInDate,
             $booking->checkOutDate,
             $booking->hotelId,
-            $roomIds
+            # $booking->rooms->map(static fn(BookingRoom $room) => $room->roomId()->value())
         ));
 
         return $booking;
+    }
+
+    public function rooms(): BookingRooms
+    {
+        return BookingRooms::create($this->rooms->toArray());
     }
 }

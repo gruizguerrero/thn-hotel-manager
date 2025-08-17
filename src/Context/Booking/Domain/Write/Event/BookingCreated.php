@@ -15,7 +15,6 @@ class BookingCreated extends DomainEvent
     private const string CHECK_IN_DATE = 'check_in_date';
     private const string CHECK_OUT_DATE = 'check_out_date';
     private const string HOTEL_ID = 'hotel_id';
-    private const string ROOM_IDS = 'room_ids';
 
     public static function create(
         Uuid $bookingId,
@@ -23,7 +22,6 @@ class BookingCreated extends DomainEvent
         DateTimeImmutable $checkInDate,
         DateTimeImmutable $checkOutDate,
         Uuid $hotelId,
-        RoomIds $roomIds
     ): self {
         return new self([
             self::AGGREGATE_ROOT_ID => $bookingId->value(),
@@ -31,7 +29,6 @@ class BookingCreated extends DomainEvent
             self::CHECK_IN_DATE => $checkInDate->format(DATE_ATOM),
             self::CHECK_OUT_DATE => $checkOutDate->format(DATE_ATOM),
             self::HOTEL_ID => $hotelId->value(),
-            self::ROOM_IDS => $roomIds->toArray(),
         ]);
     }
 
@@ -53,11 +50,6 @@ class BookingCreated extends DomainEvent
     public function hotelId(): Uuid
     {
         return Uuid::fromString($this->get(self::HOTEL_ID));
-    }
-
-    public function roomIds(): RoomIds
-    {
-        return RoomIds::create([$this->get(self::ROOM_IDS)]);
     }
 
     protected static function stringMessageName(): string

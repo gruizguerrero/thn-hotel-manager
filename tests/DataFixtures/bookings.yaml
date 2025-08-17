@@ -1,0 +1,9 @@
+bookings:
+  - id: 'c89d006d-2a6c-4e63-a99d-763acd63725d'
+    hotel_id: 'f4a8f92c-5208-4568-869c-3bc50bb28350'
+    user_id: '3f1330c2-0780-46d0-873e-a4433bd86865'
+    check_in_date: '2025-08-17T14:00:00+00:00'
+    check_out_date: '2025-08-23T12:00:00+00:00'
+    room_ids:
+      - 'cb802f58-e4af-432d-a4bd-1c002cbe8ca0'
+      - 'c54b88bf-f2b6-4e08-889b-9c949ba59ab2'

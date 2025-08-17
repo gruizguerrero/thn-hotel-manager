@@ -23,7 +23,7 @@ class Uuid
 
     public static function fromString(string $value): static
     {
-        return new self($value);
+        return new static($value);
     }
 
     public function equalsTo(Uuid $other): bool

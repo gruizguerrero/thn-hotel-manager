@@ -11,7 +11,7 @@ final class Version20250817110751 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return "Create tables bookings, booking_room y booking_rooms_assignment with proper UUID type and charset";
+        return "Create tables bookings, booking_rooms y booking_rooms_assignment with proper UUID type and charset";
     }
 
     public function up(Schema $schema): void
@@ -29,7 +29,7 @@ final class Version20250817110751 extends AbstractMigration
         ');
 
         $this->addSql('
-            CREATE TABLE booking_room (
+            CREATE TABLE booking_rooms (
                 id BINARY(16) NOT NULL PRIMARY KEY,
                 room_id BINARY(16) NOT NULL
             ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB
@@ -50,14 +50,14 @@ final class Version20250817110751 extends AbstractMigration
 
         $this->addSql('
             ALTER TABLE booking_rooms_assignment
-            ADD CONSTRAINT fk_room FOREIGN KEY (room_id) REFERENCES booking_room(id) ON DELETE CASCADE
+            ADD CONSTRAINT fk_room FOREIGN KEY (room_id) REFERENCES booking_rooms(id) ON DELETE CASCADE
         ');
     }
 
     public function down(Schema $schema): void
     {
         $this->addSql('DROP TABLE IF EXISTS booking_rooms_assignment');
-        $this->addSql('DROP TABLE IF EXISTS booking_room');
+        $this->addSql('DROP TABLE IF EXISTS booking_rooms');
         $this->addSql('DROP TABLE IF EXISTS bookings');
     }
 }

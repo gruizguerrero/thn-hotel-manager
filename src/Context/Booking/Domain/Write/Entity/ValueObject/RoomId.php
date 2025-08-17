@@ -8,4 +8,5 @@ use App\Shared\Domain\ValueObject\Uuid;
 
 final class RoomId extends Uuid
 {
+
 }

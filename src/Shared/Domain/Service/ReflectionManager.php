@@ -4,7 +4,6 @@ namespace App\Shared\Domain\Service;
 
 use ReflectionClass;
 use ReflectionProperty;
-
 final class ReflectionManager
 {
     public static function create(): self
