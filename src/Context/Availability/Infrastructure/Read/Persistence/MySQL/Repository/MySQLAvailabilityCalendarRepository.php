@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Context\Availability\Infrastructure\Persistence\MySQL\Repository;
+namespace App\Context\Availability\Infrastructure\Read\Persistence\MySQL\Repository;
 
 use App\Context\Availability\Domain\Read\Entity\AvailabilityCalendarView;
 use App\Context\Availability\Domain\Read\Repository\AvailabilityCalendarViewRepository;
