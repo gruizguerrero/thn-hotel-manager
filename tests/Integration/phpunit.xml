@@ -19,7 +19,7 @@
 
     <testsuites>
         <testsuite name="integration">
-            <directory suffix=".php">../../tests/Integration</directory>
+            <directory suffix=".php">../../tests/Integration/Context</directory>
         </testsuite>
     </testsuites>
 </phpunit>

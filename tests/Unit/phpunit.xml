@@ -30,11 +30,6 @@
             <directory suffix=".php">../../src/Shared/Application</directory>
             <directory suffix=".php">../../src/Context/*/Domain</directory>
             <directory suffix=".php">../../src/Context/*/Application</directory>
-            <directory suffix=".php">../../src/Context/Notification/*/Domain</directory>
-            <directory suffix=".php">../../src/Context/Notification/*/Application</directory>
-            <directory suffix=".php">../../src/Context/Data/*/Domain</directory>
-            <directory suffix=".php">../../src/Context/Data/*/Application</directory>
-            <directory suffix=".php">../../src/App/Application</directory>
         </include>
     </source>
 

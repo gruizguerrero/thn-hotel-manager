@@ -28,7 +28,7 @@ test-this-acceptance:
 ## Runs unit integration tests
 .PHONY: test-integration
 test-integration:
-	@docker compose exec php-fpm /bin/bash -c "XDEBUG_MODE=debug XDEBUG_CONFIG='idekey=PHPSTORM' bin/phpunit -c tests/Integration/phpunit.xml ${parameters}"
+	@docker compose exec php-fpm /bin/bash -c "XDEBUG_MODE=debug XDEBUG_CONFIG='idekey=PHPSTORM' bin/phpunit -c tests/Integration/phpunit.xml --testdox ${parameters}"
 
 .PHONY: load-fixtures
 load-fixtures:
