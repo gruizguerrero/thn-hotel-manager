@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Context\Booking\Domain\Repository;
+namespace App\Context\Booking\Domain\Write\Repository;
 
 use App\Context\Booking\Domain\Write\Aggregate\Booking;
 

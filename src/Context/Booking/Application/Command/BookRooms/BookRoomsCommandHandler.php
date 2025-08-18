@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Context\Booking\Application\Command\BookRooms;
 
-use App\Context\Booking\Domain\Repository\BookingRepository;
 use App\Context\Booking\Domain\Write\Aggregate\Booking;
 use App\Context\Booking\Domain\Write\Entity\BookingRoom;
 use App\Context\Booking\Domain\Write\Entity\BookingRooms;
 use App\Context\Booking\Domain\Write\Entity\ValueObject\RoomId;
 use App\Context\Booking\Domain\Write\Entity\ValueObject\RoomIds;
+use App\Context\Booking\Domain\Write\Repository\BookingRepository;
 use App\Shared\Application\Bus\Command\CommandHandlerInterface;
 use App\Shared\Domain\ValueObject\Uuid;
 

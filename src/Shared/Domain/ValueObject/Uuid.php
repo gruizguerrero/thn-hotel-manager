@@ -18,7 +18,7 @@ class Uuid
 
     public static function generate(): static
     {
-        return new self(UuidGenerator::generate()->value());
+        return new static(UuidGenerator::generate()->value());
     }
 
     public static function fromString(string $value): static

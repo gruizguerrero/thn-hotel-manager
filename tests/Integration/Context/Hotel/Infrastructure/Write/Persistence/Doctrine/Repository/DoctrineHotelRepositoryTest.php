@@ -8,6 +8,10 @@ use App\Context\Hotel\Domain\Write\Aggregate\Hotel;
 use App\Context\Hotel\Domain\Write\Aggregate\ValueObject\City;
 use App\Context\Hotel\Domain\Write\Aggregate\ValueObject\Country;
 use App\Context\Hotel\Domain\Write\Aggregate\ValueObject\Name;
+use App\Context\Hotel\Domain\Write\Entity\HotelRoom;
+use App\Context\Hotel\Domain\Write\Entity\HotelRooms;
+use App\Context\Hotel\Domain\Write\Entity\ValueObject\Category;
+use App\Context\Hotel\Domain\Write\Entity\ValueObject\RoomNumber;
 use App\Context\Hotel\Domain\Write\Repository\HotelRepository;
 use App\Shared\Domain\ValueObject\Uuid;
 use App\Shared\Domain\Write\Exception\AggregateNotFoundException;
@@ -20,11 +24,24 @@ final class DoctrineHotelRepositoryTest extends RepositoryTestCase
     {
         $this->expectNotToPerformAssertions();
 
+        $firstRoom = HotelRoom::create(
+            Uuid::generate(),
+            RoomNumber::fromString('101'),
+            Category::DELUXE,
+        );
+
+        $secondRoom = HotelRoom::create(
+            Uuid::generate(),
+            RoomNumber::fromString('101'),
+            Category::SUITE,
+        );
+
         $hotel = Hotel::create(
             Uuid::generate(),
             Name::fromString('NH Collection'),
             City::fromString('Madrid'),
             Country::fromString('ES'),
+            HotelRooms::create([$firstRoom, $secondRoom])
         );
 
         $this->repository()->save($hotel);
@@ -50,11 +67,24 @@ final class DoctrineHotelRepositoryTest extends RepositoryTestCase
 
     private function givenASavedHotel(): Hotel
     {
+        $firstRoom = HotelRoom::create(
+            Uuid::generate(),
+            RoomNumber::fromString('101'),
+            Category::DELUXE,
+        );
+
+        $secondRoom = HotelRoom::create(
+            Uuid::generate(),
+            RoomNumber::fromString('101'),
+            Category::SUITE,
+        );
+
         $hotel = Hotel::create(
             Uuid::generate(),
             Name::fromString('NH Collection'),
             City::fromString('Madrid'),
             Country::fromString('ES'),
+            HotelRooms::create([$firstRoom, $secondRoom])
         );
 
         $this->repository()->save($hotel);
@@ -66,7 +96,7 @@ final class DoctrineHotelRepositoryTest extends RepositoryTestCase
 
     protected function purge(): void
     {
-        $this->purgeTables('hotels');
+        $this->purgeTables('hotels', 'hotel_rooms', 'hotel_rooms_assignment');
     }
 
     protected function repository(): AggregateRepository

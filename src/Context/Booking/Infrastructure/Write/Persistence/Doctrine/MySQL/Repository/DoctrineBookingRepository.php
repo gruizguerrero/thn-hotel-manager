@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Context\Booking\Infrastructure\Write\Persistence\Doctrine\MySQL\Repository;
 
-use App\Context\Booking\Domain\Repository\BookingRepository;
 use App\Context\Booking\Domain\Write\Aggregate\Booking;
+use App\Context\Booking\Domain\Write\Repository\BookingRepository;
 use App\Shared\Infrastructure\Persistence\Doctrine\MySQL\Repository\AggregateRepository;
 
 class DoctrineBookingRepository extends AggregateRepository implements BookingRepository
