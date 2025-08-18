@@ -2,6 +2,13 @@ SHELL=/bin/bash
 
 PLATFORM := $(shell uname -s)
 
+.PHONY: install
+install:
+	docker compose build
+	docker compose up -d
+	docker compose exec php-fpm composer install --no-interaction
+	docker compose exec php-fpm bin/console doctrine:migrations:migrate --no-interaction
+
 .PHONY: php
 php:
 	docker compose exec php-fpm /bin/bash

@@ -1,127 +1,115 @@
 # Hotel Management API
 
-## Project Description
+A Symfony-based, modular monolith that applies DDD (Domain-Driven Design) and CQRS (Command Query Responsibility Segregation) to manage hotels, bookings, availability, and reporting metrics.
 
-Hotel Management is a Symfony-based application that implements a modular monolith architecture with DDD (Domain-Driven Design) and CQRS (Command Query Responsibility Segregation). The project is designed to manage hotels, bookings, campaigns, and metrics related to the hotel industry.
+## Tech Stack
+
+- **Framework**: PHP 8.3, Symfony 6.4, Doctrine (ORM + DBAL), Messenger
+- **Storage**: MySQL 8 (InnoDB), RabbitMQ
+- **Environment**: Docker + Make
+- **Testing**: Unit, Integration, Acceptance (Behat)
 
 ## Architecture
 
-The application is structured following Domain-Driven Design principles with clearly defined Bounded Contexts that coexist within a single application:
+The app is organized into Bounded Contexts living in a single repo (modular monolith):
 
-- **Hotel**: Administration of hotels and rooms
-- **Booking**: Room reservation system
-- **Metric**: User analytics and metrics per hotel (read-only)
+- **Hotel (Catalog)** – Hotel + rooms inventory, exposes hotel basic info.
+  - Stores `number_of_rooms` as a persisted counter (updated on addRoom/removeRoom) to avoid runtime counts.
+- **Availability (Read Model)** – Materialized calendar (`hotel_id`, `room_id`, `day`, `status`, `capacity`) for fast availability queries and atomic slot locking. Internal API only.
+- **Booking (Write Model)** – Creates bookings for 1..N rooms; validates availability before persisting; emits domain events.
+- **Metric (Read Model)** – Reporting: unique users per hotel (projection fed by booking events).
 
-Each context follows the CQRS pattern separating read and write operations, and uses Event Sourcing to maintain consistency between contexts.
-
-## Project Structure
+### Project Structure
 
 ```
 src/
   Context/
-    Availability/      # Context for availability management
-    Booking/           # Context for booking management
-    Campaign/          # Context for campaign management
-    Hotel/             # Context for hotel management
-    Metric/            # Context for metrics (read-only)
-  Shared/              # Code shared between contexts
-    Application/       # Shared application logic
-    Domain/            # Shared domain entities and rules
-    Infrastructure/    # Infrastructure implementations
-    UI/                # User interface components
+    Availability/   # Read model & locker for room/day slots
+    Booking/        # Commands, Booking aggregate, events
+    Hotel/          # Hotel aggregate + read models (basic info)
+    Metric/         # Read-only projections/queries (unique users)
+  Shared/           # Cross-cutting: buses, base classes, utils
 ```
 
 ## API Endpoints
 
-Based on the routes configuration, the API provides endpoints for the following domains:
+All responses are JSON. Prefix shown as `/api`.
 
-### Health Endpoints
-- Health check endpoints to verify the application status
+### Health
 
-### Campaign Endpoints
-- Endpoints for managing promotional campaigns
+- `GET /api/health` – liveness/readiness (simple 200).
 
-### Hotel Endpoints
-- Endpoints for hotel management operations
+### Hotel
 
-### Booking Endpoints
-- Endpoints for booking management
+- `GET /api/hotels/{hotelId}`
+  Returns basic info:
+  ```json
+  { "id":"HOTEL-001", "name":"Hotel Demo", "city":"Madrid", "country":"ES", "number_of_rooms":5 }
+  ```
 
-### Metric Endpoints
-- Endpoints for retrieving metrics and analytics data
+- `GET /api/hotels/{hotelId}/availability?from=YYYY-MM-DD&to=YYYY-MM-DD`
+  Returns rooms available for the whole range [from,to):
+  ```json
+  {
+    "hotel_id":"HOTEL-001",
+    "from":"2025-09-01",
+    "to":"2025-09-05",
+    "available_rooms":[{"room_id":"R-101","capacity":2}]
+  }
+  ```
 
-For detailed API documentation, you can use the following endpoints when available:
-- Swagger UI: `/api/doc`
-- OpenAPI Specification: `/api/doc.json`
+### Booking
 
-## Requirements
+- `POST /api/bookings`
+  Body:
+  ```json
+  { "hotel_id":"HOTEL-001", "user_id":"USER-123", "from":"2025-09-01", "to":"2025-09-05", "rooms":["R-101","R-102"] }
+  ```
+  - Validates rooms belong to the hotel and are free (via Availability).
+  - Returns 201 on success; 409 if any room is not available.
 
-- PHP 8.1 or higher
-- Symfony 6.x
-- MySQL 8.0
-- RabbitMQ 3.x
-- Redis (optional, for metrics optimization)
+### Metric
+
+- `GET /api/metrics/hotel-users`
+  Returns unique users per hotel:
+  ```json
+  {
+    "data": [
+      { "id":"HOTEL-001", "users":"2" },
+      { "id":"HOTEL-002", "users":"1" }
+    ],
+    "metadata":[]
+  }
+  ```
+
+> Note: Availability is an internal read model; Hotel/Booking call it via application services/ports (no public HTTP).
+
+## Messaging (Domain Events)
+
+RabbitMQ is used for domain event propagation (Symfony Messenger):
+- **Transport**: `async_domain_event`
+- **Example events**: `booking.created` / `rooms.booked`
+- **Availability projector** updates `availability_calendar`.
+- **Metric projector** maintains:
+  - `metric_hotel_users_detail(hotel_id, user_id)` PK (hotel_id,user_id)
+  - `metric_hotel_users(hotel_id, unique_users)` PK (hotel_id)
+  - Both projections are idempotent and rely on DB constraints to avoid double counting
 
 ## Installation
 
-1. Clone the repository:
-   ```
-   git clone [repository-url]
-   cd hotel-management
-   ```
-
-2. Install dependencies:
-   ```
-   composer install
-   ```
-
-3. Set up environment variables:
-   ```
-   cp .env .env.local
-   # Edit .env.local with your configurations
-   ```
-
-4. Start Docker containers:
-   ```
-   docker-compose up -d
-   ```
-
-5. Run migrations:
-   ```
-   bin/console doctrine:migrations:migrate
-   ```
-
-6. Load test data:
-   ```
-   bin/console doctrine:fixtures:load
-   ```
-
-## Testing
-
-The project includes three levels of testing:
-
-### Unit Tests
-```
-make test-unit
+The app is fully dockerized. From the project root:
+```bash
+make install   # build containers, install deps, create DB, run migrations
 ```
 
-### Integration Tests
+## Running Tests
+
+The project implements a comprehensive testing strategy with three distinct levels:
+
+```bash
+make test-unit         # Unit tests validate individual components in isolation
+make test-integration  # Integration tests verify components work together correctly
+make test-acceptance   # Acceptance tests validate end-to-end business behavior
 ```
-make test-integration
-```
 
-### Acceptance Tests
-```
-make test-acceptance
-```
-
-## Messaging Architecture
-
-The system uses RabbitMQ for asynchronous communication between contexts:
-
-- `async_domain_event` - Queue for domain events
-
-
-## License
-
-[Include license information]
+Acceptance tests exercise the API and messaging, asserting business behavior end-to-end.
