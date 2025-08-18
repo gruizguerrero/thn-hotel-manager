@@ -24,6 +24,6 @@ final class HotelContext extends AggregateContext
 
     protected function purge(): void
     {
-        $this->purgeTables('hotels');
+        $this->purgeTables('hotels', 'hotel_rooms', 'hotel_rooms_assignment');
     }
 }

@@ -8,5 +8,22 @@
         <field name="name" column="name" type="name" length="255" />
         <field name="city" column="city" type="city" length="255" />
         <field name="country" column="country" type="country" length="2" />
+        <!--<field name="numberOfRooms" column="number_of_rooms" type="integer" />-->
+        <field name="createdAt" column="created_at" type="datetime_immutable" />
+        <field name="updatedAt" column="updated_at" type="datetime_immutable" nullable="true" />
+
+        <many-to-many field="rooms" target-entity="App\Context\Hotel\Domain\Write\Entity\HotelRoom" fetch="EAGER">
+            <join-table name="hotel_rooms_assignment">
+                <join-columns>
+                    <join-column name="hotel_id" referenced-column-name="id" />
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="room_id" referenced-column-name="id" />
+                </inverse-join-columns>
+            </join-table>
+            <cascade>
+                <cascade-persist/>
+            </cascade>
+        </many-to-many>
     </entity>
 </doctrine-mapping>

@@ -6,7 +6,7 @@ use App\Context\Hotel\Domain\Write\Aggregate\Hotel;
 use App\Context\Hotel\Domain\Write\Aggregate\ValueObject\City;
 use App\Context\Hotel\Domain\Write\Aggregate\ValueObject\Country;
 use App\Context\Hotel\Domain\Write\Aggregate\ValueObject\Name;
-use App\Context\Hotel\Domain\Write\Entity\Room;
+use App\Context\Hotel\Domain\Write\Entity\HotelRoom;
 use App\Context\Hotel\Domain\Write\Event\HotelCreated;
 use App\Shared\Domain\ValueObject\Uuid;
 use PHPUnit\Framework\TestCase;
@@ -55,14 +55,14 @@ final class HotelTest extends TestCase
             $country,
         );
 
-        $firstRoom = Room::create(
+        $firstRoom = HotelRoom::create(
             Uuid::generate(),
             1,
             101,
             2
         );
 
-        $secondRoom = Room::create(
+        $secondRoom = HotelRoom::create(
             Uuid::generate(),
             1,
             102,

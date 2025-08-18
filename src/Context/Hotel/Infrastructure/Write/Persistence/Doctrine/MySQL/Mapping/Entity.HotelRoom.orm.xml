@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+    https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="App\Context\Hotel\Domain\Write\Entity\HotelRoom" table="hotel_rooms">
+        <id name="id" column="id" type="uuid" />
+        <field name="number" column="number" type="room_number" />
+        <field name="category" column="category" enum-type="App\Context\Hotel\Domain\Write\Entity\ValueObject\Category" />
+    </entity>
+</doctrine-mapping>

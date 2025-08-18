@@ -2,7 +2,7 @@
 
 namespace App\Tests\Unit\Context\Hotel\Domain\Write\Entity;
 
-use App\Context\Hotel\Domain\Write\Entity\Room;
+use App\Context\Hotel\Domain\Write\Entity\HotelRoom;
 use App\Shared\Domain\ValueObject\Uuid;
 use PHPUnit\Framework\TestCase;
 
@@ -15,7 +15,7 @@ final class RoomTest extends TestCase
         $number = 101;
         $capacity = 2;
 
-        $room = Room::create($id, $floor, $number, $capacity);
+        $room = HotelRoom::create($id, $floor, $number, $capacity);
 
         $this->assertTrue($id->equalsTo($room->id()));
         $this->assertEquals($capacity, $room->capacity());

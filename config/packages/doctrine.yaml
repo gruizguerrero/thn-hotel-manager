@@ -10,6 +10,11 @@ doctrine:
             name: App\Context\Hotel\Infrastructure\Write\Persistence\Doctrine\MySQL\Type\NameType
             city: App\Context\Hotel\Infrastructure\Write\Persistence\Doctrine\MySQL\Type\CityType
             country: App\Context\Hotel\Infrastructure\Write\Persistence\Doctrine\MySQL\Type\CountryType
+            number_of_rooms: App\Context\Hotel\Infrastructure\Write\Persistence\Doctrine\MySQL\Type\NumberOfRoomsType
+            capacity: App\Context\Hotel\Infrastructure\Write\Persistence\Doctrine\MySQL\Type\CapacityType
+            floor: App\Context\Hotel\Infrastructure\Write\Persistence\Doctrine\MySQL\Type\FloorType
+            room_number: App\Context\Hotel\Infrastructure\Write\Persistence\Doctrine\MySQL\Type\RoomNumberType
+
     orm:
         auto_generate_proxy_classes: true
         enable_lazy_ghost_objects: true
