@@ -64,6 +64,7 @@ services:
     test.App\Context\Booking\Domain\Write\Repository\BookingRepository: '@App\Context\Booking\Infrastructure\Write\Persistence\Doctrine\MySQL\Repository\DoctrineBookingRepository'
     test.App\Context\Metric\Domain\Read\Repository\HotelUniqueUsersViewRepository: '@App\Context\Metric\Infrastructure\Read\Persistence\MySQL\MySQLHotelUniqueUsersViewRepository'
     test.App\Context\Metric\Domain\Read\Repository\HotelUserDetailViewRepository: '@App\Context\Metric\Infrastructure\Read\Persistence\MySQL\MySQLHotelUserDetailViewRepository'
+    test.App\Context\Hotel\Domain\Read\Repository\HotelViewRepository: '@App\Context\Hotel\Infrastructure\Read\Persistence\MySQL\MySQLHotelViewRepository'
 
     App\Tests\DataFixtures\DataLoader\MySQL\AvailabilityFixtures:
         class: App\Tests\DataFixtures\DataLoader\MySQL\AvailabilityFixtures
