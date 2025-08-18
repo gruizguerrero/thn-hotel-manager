@@ -9,6 +9,11 @@ final class FullyQualifiedClassNameMessageFactory implements MessageFactory
 {
     private array $keyToClassNameMap;
 
+    public function __construct()
+    {
+        $this->keyToClassNameMap = [];
+    }
+
     public function create(string $messageName, array $payload, array $metadata): Message
     {
         /** @var Message $message */

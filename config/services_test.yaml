@@ -14,6 +14,29 @@ services:
         tags:
             - { name: 'doctrine.fixtures.purger_factory', alias: 'default' }
 
+    ### RabbitMQ Configuration ###
+    rabbitmq_connection_thn:
+        class: PhpAmqpLib\Connection\AMQPStreamConnection
+        arguments:
+            - '%env(AMQP_TRANSPORT_DSN_URL)%'
+            - '%env(AMQP_TRANSPORT_DSN_PORT)%'
+            - '%env(AMQP_TRANSPORT_DSN_USER)%'
+            - '%env(AMQP_TRANSPORT_DSN_PASS)%'
+            - '%env(AMQP_TRANSPORT_DSN_VHOST)%'
+
+    ### Bus configuration ###
+    test.traceable.messenger.bus.events:
+        class: Symfony\Component\Messenger\TraceableMessageBus
+        arguments:
+            - '@messenger.bus.events'
+
+    test.App\Shared\Infrastructure\Bus\Event\MessengerEventBus:
+        class: App\Shared\Infrastructure\Bus\Event\MessengerEventBus
+        arguments:
+            - '@test.traceable.messenger.bus.events'
+
+    thn.shared.application.event_bus: '@test.App\Shared\Infrastructure\Bus\Event\MessengerEventBus'
+
     App\Tests\Acceptance\ApiContext:
         arguments:
             - '@kernel'
@@ -26,6 +49,15 @@ services:
     App\Tests\Acceptance\BookingContext:
         arguments:
             - '@kernel'
+
+    App\Tests\Acceptance\MetricContext:
+        arguments:
+            - '@kernel'
+            - '@thn.shared.application.event_bus'
+
+    App\Tests\Acceptance\MessageContext:
+            - '@kernel'
+            - '@rabbitmq_connection_thn'
 
     test.App\Context\Campaign\Infrastructure\Persistence\Doctrine\MySQL\Repository\DoctrineCampaignRepository: '@App\Context\Campaign\Infrastructure\Persistence\Doctrine\MySQL\Repository\DoctrineCampaignRepository'
     test.App\Context\Hotel\Domain\Write\Repository\HotelRepository: '@App\Context\Hotel\Infrastructure\Write\Persistence\Doctrine\MySQL\Repository\DoctrineHotelRepository'

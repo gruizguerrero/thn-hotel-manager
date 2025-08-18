@@ -15,15 +15,15 @@ services:
             - '../src/Kernel.php'
 
     _instanceof:
-        # By default, each handler will be available to handle messages on all of your buses.
-        # To prevent dispatching a message to the wrong bus without an error,
-        # you can restrict each handler to a specific bus using the messenger.message_handler tag:
         App\Shared\Application\Bus\Command\CommandHandlerInterface:
             tags:
                 - { name: messenger.message_handler, bus: messenger.bus.commands }
 
         App\Shared\Application\Bus\Query\QueryHandlerInterface:
             tags: [ { name: messenger.message_handler, bus: messenger.bus.queries } ]
+
+        App\Shared\Application\Bus\Event\DomainEventListenerInterface:
+            tags: [ { name: messenger.message_handler, bus: messenger.bus.events } ]
 
         App\Shared\Domain\Message\Message:
             tags: ['message']
@@ -69,7 +69,7 @@ services:
             - '@messenger.bus.queries'
 
     message.message_factory:
-        class: App\Shared\Domain\Message\Factory\FullyQualifiedClassNameMessageFactory
+        alias: App\Shared\Domain\Message\Factory\FullyQualifiedClassNameMessageFactory
 
     thn.shared.infrastructure.bus.event.add_amqp_stamp_middleware:
         class: App\Shared\Infrastructure\Bus\Event\AddAmqpStampMiddleware

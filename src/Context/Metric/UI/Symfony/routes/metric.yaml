@@ -1,0 +1,4 @@
+get_metrics:
+  path: /metrics
+  controller: App\Context\Metric\UI\Controller\GetMetricsController
+  methods:  [GET]

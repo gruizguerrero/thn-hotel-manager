@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Acceptance;
 
+use App\Tests\DataFixtures\DataLoader\MySQL\BookingFixtures;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 final class BookingContext extends AggregateContext
@@ -18,7 +19,7 @@ final class BookingContext extends AggregateContext
      */
     public function iHaveBookings(): void
     {
-        // $this->loadFixtures(new HotelFixtures());
+        $this->loadFixtures(new BookingFixtures());
     }
 
     protected function purge(): void

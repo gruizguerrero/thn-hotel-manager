@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Shared\Infrastructure\Bus;
 
-
 use App\Shared\Domain\Message\Factory\MessageFactory;
 use App\Shared\Domain\Message\Message;
 use App\Shared\Domain\Service\Assert;
@@ -38,7 +37,6 @@ final readonly class MessageSerializer
     private function validateMetadata(array $body): void
     {
         Assert::keyExists($body, Message::METADATA);
-
         Assert::that($body[Message::METADATA])
             ->isArray()
             ->keyExists(Message::MESSAGE_NAME)

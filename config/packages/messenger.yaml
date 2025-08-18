@@ -40,6 +40,7 @@ framework:
                         ha_async_domain_event_queue:
                             binding_keys:
                                 - 'thn.campaign_manager.domain_event.#'
+                                - 'thn.booking_management.domain_event.#'
 
         routing:
             App\Shared\Domain\Write\Event\DomainEvent: async_domain_event

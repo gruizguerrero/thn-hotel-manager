@@ -11,7 +11,7 @@ final class Version20250818135302 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return 'Availability calendar with string status';
+        return 'Add availability calendar';
     }
 
     public function up(Schema $schema): void

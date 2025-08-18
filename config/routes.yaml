@@ -9,3 +9,6 @@ hotel:
 
 booking:
     resource: '../src/Context/Booking/UI/Symfony/routes/booking.yaml'
+
+metric:
+    resource: '../src/Context/Metric/UI/Symfony/routes/metric.yaml'

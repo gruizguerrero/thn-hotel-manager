@@ -17,6 +17,13 @@ default:
             - App\Tests\Acceptance\ApiContext
             - App\Tests\Acceptance\BookingContext
 
+    metric:
+        paths: [tests/Acceptance/Metric]
+        contexts:
+            - App\Tests\Acceptance\ApiContext
+            - App\Tests\Acceptance\MetricContext
+            - App\Tests\Acceptance\MessageContext
+
   extensions:
     FriendsOfBehat\SymfonyExtension:
       bootstrap: 'config/bootstrap.php'
