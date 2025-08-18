@@ -28,3 +28,9 @@ services:
 
     test.App\Context\Campaign\Infrastructure\Persistence\Doctrine\MySQL\Repository\DoctrineCampaignRepository: '@App\Context\Campaign\Infrastructure\Persistence\Doctrine\MySQL\Repository\DoctrineCampaignRepository'
     test.App\Context\Hotel\Domain\Write\Repository\HotelRepository: '@App\Context\Hotel\Infrastructure\Write\Persistence\Doctrine\MySQL\Repository\DoctrineHotelRepository'
+    test.App\Context\Availability\Domain\Read\Repository\AvailabilityRepository: '@App\Context\Availability\Infrastructure\Persistence\MySQL\Repository\MySQLAvailabilityCalendarRepository'
+
+    App\Tests\DataFixtures\DataLoader\MySQL\AvailabilityFixtures:
+        class: App\Tests\DataFixtures\DataLoader\MySQL\AvailabilityFixtures
+        arguments:
+            - '@test.App\Context\Availability\Domain\Read\Repository\AvailabilityRepository'
