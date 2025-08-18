@@ -7,10 +7,9 @@ namespace App\Context\Hotel\Domain\Write\Aggregate;
 use App\Context\Hotel\Domain\Write\Aggregate\ValueObject\City;
 use App\Context\Hotel\Domain\Write\Aggregate\ValueObject\Country;
 use App\Context\Hotel\Domain\Write\Aggregate\ValueObject\Name;
-use App\Context\Hotel\Domain\Write\Entity\HotelRoom;
+use App\Context\Hotel\Domain\Write\Aggregate\ValueObject\NumberOfRooms;
 use App\Context\Hotel\Domain\Write\Entity\HotelRooms;
 use App\Context\Hotel\Domain\Write\Event\HotelCreated;
-use App\Shared\Domain\ValueObject\IntegerValueObject;
 use App\Shared\Domain\ValueObject\Uuid;
 use App\Shared\Domain\Write\Aggregate\AggregateRoot;
 use DateTimeImmutable;
@@ -22,7 +21,7 @@ class Hotel extends AggregateRoot
     private Country $country;
     /** @var HotelRooms $rooms */
     private $rooms;
-    private IntegerValueObject $numberOfRooms;
+    private NumberOfRooms $numberOfRooms;
     private DateTimeImmutable $createdAt;
     private ?DateTimeImmutable $updatedAt;
 
@@ -40,7 +39,7 @@ class Hotel extends AggregateRoot
         $hotel->createdAt = new DateTimeImmutable();
         $hotel->updatedAt = null;
         $hotel->rooms = $rooms;
-        $hotel->numberOfRooms = new IntegerValueObject($hotel->rooms->count());
+        $hotel->numberOfRooms = new NumberOfRooms($hotel->rooms->count());
 
         $hotel->recordEvent(
             HotelCreated::create(
@@ -52,12 +51,6 @@ class Hotel extends AggregateRoot
         );
 
         return $hotel;
-    }
-
-    public function addRoom(HotelRoom $room): void
-    {
-        $this->rooms->add($room);
-        $this->numberOfRooms++;
     }
 
     public function name(): Name

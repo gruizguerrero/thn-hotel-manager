@@ -22,6 +22,7 @@ final class Version20250815072943 extends AbstractMigration
                 name VARCHAR(255) NOT NULL,
                 city VARCHAR(255) NOT NULL,
                 country VARCHAR(2) NOT NULL,
+                number_of_rooms INT NOT NULL,
                 created_at DATETIME NOT NULL,
                 updated_at DATETIME NULL DEFAULT NULL,
                 PRIMARY KEY(id)

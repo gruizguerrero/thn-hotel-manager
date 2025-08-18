@@ -8,7 +8,7 @@
         <field name="name" column="name" type="name" length="255" />
         <field name="city" column="city" type="city" length="255" />
         <field name="country" column="country" type="country" length="2" />
-        <!--<field name="numberOfRooms" column="number_of_rooms" type="integer" />-->
+        <field name="numberOfRooms" column="number_of_rooms" type="number_of_rooms" />
         <field name="createdAt" column="created_at" type="datetime_immutable" />
         <field name="updatedAt" column="updated_at" type="datetime_immutable" nullable="true" />
 
@@ -18,7 +18,7 @@
                     <join-column name="hotel_id" referenced-column-name="id" />
                 </join-columns>
                 <inverse-join-columns>
-                    <join-column name="room_id" referenced-column-name="id" />
+                    <join-column name="room_id" referenced-column-name="id" unique="true" />
                 </inverse-join-columns>
             </join-table>
             <cascade>

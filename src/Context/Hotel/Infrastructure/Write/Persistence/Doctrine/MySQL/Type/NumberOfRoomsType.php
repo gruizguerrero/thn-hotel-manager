@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Context\Hotel\Infrastructure\Write\Persistence\Doctrine\MySQL\Type;
 
-use App\Context\Hotel\Domain\Write\Entity\ValueObject\NumberOfRooms;
+use App\Context\Hotel\Domain\Write\Aggregate\ValueObject\NumberOfRooms;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\Type;
 
@@ -36,10 +36,5 @@ final class NumberOfRoomsType extends Type
     public function getSQLDeclaration(array $column, AbstractPlatform $platform): string
     {
         return $platform->getIntegerTypeDeclarationSQL($column);
-    }
-
-    public function requiresSQLCommentHint(AbstractPlatform $platform): bool
-    {
-        return true;
     }
 }
