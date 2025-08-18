@@ -59,14 +59,8 @@ class Booking extends AggregateRoot
             $booking->checkInDate,
             $booking->checkOutDate,
             $booking->hotelId,
-            # $booking->rooms->map(static fn(BookingRoom $room) => $room->roomId()->value())
         ));
 
         return $booking;
-    }
-
-    public function rooms(): BookingRooms
-    {
-        return BookingRooms::create($this->rooms->toArray());
     }
 }

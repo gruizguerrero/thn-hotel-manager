@@ -24,11 +24,6 @@ doctrine:
                 validate_xml_mapping: true
                 naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
                 mappings:
-                    Campaign:
-                        type: xml
-                        dir: '%kernel.project_dir%/src/Context/Campaign/Infrastructure/Persistence/Doctrine/MySQL/Mapping'
-                        prefix: 'App\Context\Campaign\Domain\Write'
-                        is_bundle: false
                     Hotel:
                         type: xml
                         dir: '%kernel.project_dir%/src/Context/Hotel/Infrastructure/Write/Persistence/Doctrine/MySQL/Mapping'

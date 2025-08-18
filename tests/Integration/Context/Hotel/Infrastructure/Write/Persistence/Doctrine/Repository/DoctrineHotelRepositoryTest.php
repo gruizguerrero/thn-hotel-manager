@@ -66,7 +66,7 @@ final class DoctrineHotelRepositoryTest extends RepositoryTestCase
 
     protected function purge(): void
     {
-        $this->purgeTables('hotel');
+        $this->purgeTables('hotels');
     }
 
     protected function repository(): AggregateRepository
