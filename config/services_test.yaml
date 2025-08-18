@@ -21,6 +21,7 @@ services:
     App\Tests\Acceptance\HotelContext:
         arguments:
             - '@kernel'
+            - '@test.App\Context\Availability\Domain\Read\Repository\AvailabilityRepository'
 
     App\Tests\Acceptance\BookingContext:
         arguments:

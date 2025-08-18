@@ -2,3 +2,8 @@ get_hotel:
   path: /hotels/{hotelId}
   controller: App\Context\Hotel\UI\Controller\GetHotelController
   methods:  [GET]
+
+get_hotel_availability:
+  path: /hotels/{hotelId}/availability
+  controller: App\Context\Hotel\UI\Controller\GetHotelAvailabilityController
+  methods: [GET]
