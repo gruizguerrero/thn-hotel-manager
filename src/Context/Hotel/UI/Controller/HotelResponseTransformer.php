@@ -21,6 +21,7 @@ final class HotelResponseTransformer extends HttpResponseTransformer
             FindHotelQueryResponse::NAME => $queryResponse->name(),
             FindHotelQueryResponse::CITY => $queryResponse->city(),
             FindHotelQueryResponse::COUNTRY => $queryResponse->country(),
+            FindHotelQueryResponse::NUMBER_OF_ROOMS => $queryResponse->numberOfRooms(),
         ];
     }
 

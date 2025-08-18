@@ -15,7 +15,8 @@ Feature: Fetch Hotel Details
         "id": "b2c1f8d3-4e5a-4c6b-8d7e-9f0a1b2c3d4e",
         "name": "Hilton Garden Inn",
         "city": "Barcelona",
-        "country": "ES"
+        "country": "ES",
+        "numberOfRooms": 2
       },
       "metadata": []
     }

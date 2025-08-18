@@ -12,6 +12,7 @@ final class FindHotelQueryResponse implements Response
     public const string NAME = 'name';
     public const string CITY = 'city';
     public const string COUNTRY = 'country';
+    public const string NUMBER_OF_ROOMS = 'numberOfRooms';
 
     public function __construct(private readonly array $result)
     {
@@ -36,6 +37,11 @@ final class FindHotelQueryResponse implements Response
     public function country(): string
     {
         return $this->result[self::COUNTRY];
+    }
+
+    public function numberOfRooms(): int
+    {
+        return (int) $this->result[self::NUMBER_OF_ROOMS];
     }
 
     public function result(): array

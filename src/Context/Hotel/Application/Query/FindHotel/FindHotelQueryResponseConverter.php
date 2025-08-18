@@ -4,17 +4,18 @@ declare(strict_types=1);
 
 namespace App\Context\Hotel\Application\Query\FindHotel;
 
-use App\Context\Hotel\Domain\Write\Aggregate\Hotel;
+use App\Context\Hotel\Domain\Read\Entity\HotelView;
 
 final class FindHotelQueryResponseConverter
 {
-    public function __invoke(Hotel $hotel): FindHotelQueryResponse
+    public function __invoke(HotelView $hotel): FindHotelQueryResponse
     {
         return new FindHotelQueryResponse([
-            FindHotelQueryResponse::ID => $hotel->id()->value(),
-            FindHotelQueryResponse::NAME => $hotel->name()->value(),
-            FindHotelQueryResponse::CITY => $hotel->city()->value(),
-            FindHotelQueryResponse::COUNTRY => $hotel->country()->value(),
+            FindHotelQueryResponse::ID => $hotel->id(),
+            FindHotelQueryResponse::NAME => $hotel->name(),
+            FindHotelQueryResponse::COUNTRY => $hotel->country(),
+            FindHotelQueryResponse::CITY => $hotel->city(),
+            FindHotelQueryResponse::NUMBER_OF_ROOMS => $hotel->numberOfRooms(),
         ]);
     }
 }
