@@ -145,8 +145,7 @@ Acceptance tests exercise the API and messaging, asserting business behavior end
 
 ### Some clarifications and notes
 
-* Given the ID of an Hotel, we want to be able to fetch the
-  Hotel basic information and the available rooms. “Given the ID of a hotel, we want to be able to fetch the hotel’s basic information and the available rooms.”
+* “Given the ID of a hotel, we want to be able to fetch the hotel’s basic information and the available rooms.”
   This felt a bit ambiguous to me. At first, I understood it as returning only the hotel’s basic data plus its rooms as an inventory. However, since the word “availability” is mentioned, I also implemented a separate use case that returns the availability of a hotel’s rooms for a given date range.
 
 * I strongly recommend reviewing the **acceptance tests**, as they’re the best guide to understand the system’s expected behavior and the API contracts, especially `metric.feature`, which **receives events from Rabbit, consumes them, and builds the metric projections in the handler**. I implemented this in the **simplest** possible way for the exercise. In production it wouldn’t be the most adequate or efficient, because there’s a risk of a **race condition** that could increment the number of unique users concurrently. This could be addressed by wrapping the operation in a **database transaction** and locking appropriately, or by using **persistent Redis** as a lock/helper with **MySQL as the source of truth**, there are multiple options.
