@@ -13,9 +13,8 @@ A Symfony-based, modular monolith that applies DDD (Domain-Driven Design) and CQ
 
 The app is organized into Bounded Contexts living in a single repo (modular monolith):
 
-- **Hotel (Catalog)** – Hotel + rooms inventory, exposes hotel basic info.
-  - Stores `number_of_rooms` as a persisted counter (updated on addRoom/removeRoom) to avoid runtime counts.
-- **Availability (Read Model)** – Materialized calendar (`hotel_id`, `room_id`, `day`, `status`, `capacity`) for fast availability queries and atomic slot locking. Internal API only.
+- **Hotel** – Hotel + rooms inventory, exposes hotel basic info and availability.
+- **Availability (Read Model)** – Materialized calendar (`hotel_id`, `room_id`, `day`, `status`, `capacity`) for fast availability queries. Internal API only.
 - **Booking (Write Model)** – Creates bookings for 1..N rooms; validates availability before persisting; emits domain events.
 - **Metric (Read Model)** – Reporting: unique users per hotel (projection fed by booking events).
 
@@ -37,48 +36,74 @@ All responses are JSON. Prefix shown as `/api`.
 
 ### Health
 
-- `GET /api/health` – liveness/readiness (simple 200).
+- `GET /health` – liveness/readiness (simple 200).
 
 ### Hotel
 
-- `GET /api/hotels/{hotelId}`
+- `GET /hotels/{hotelId}`
   Returns basic info:
   ```json
-  { "id":"HOTEL-001", "name":"Hotel Demo", "city":"Madrid", "country":"ES", "number_of_rooms":5 }
+  {
+    "id": "f1c8e1a8-57b8-4d2b-8460-76c280de773e",
+    "name": "Hotel Demo",
+    "city": "Madrid",
+    "country": "ES",
+    "number_of_rooms": 5
+  }
   ```
 
-- `GET /api/hotels/{hotelId}/availability?from=YYYY-MM-DD&to=YYYY-MM-DD`
+- `GET /hotels/{hotelId}/availability?from=YYYY-MM-DD&to=YYYY-MM-DD`
   Returns rooms available for the whole range [from,to):
   ```json
   {
-    "hotel_id":"HOTEL-001",
-    "from":"2025-09-01",
-    "to":"2025-09-05",
-    "available_rooms":[{"room_id":"R-101","capacity":2}]
+    "hotel_id": "f1c8e1a8-57b8-4d2b-8460-76c280de773e",
+    "from": "2025-09-01",
+    "to": "2025-09-05",
+    "available_rooms": [
+      {
+        "room_id": "9876dfc9-ef7a-48a0-8f31-a18742c0c828",
+        "capacity": 2
+      }
+    ]
   }
   ```
 
 ### Booking
 
-- `POST /api/bookings`
+- `POST /bookings`
   Body:
   ```json
-  { "hotel_id":"HOTEL-001", "user_id":"USER-123", "from":"2025-09-01", "to":"2025-09-05", "rooms":["R-101","R-102"] }
+  {
+    "hotel_id": "f1c8e1a8-57b8-4d2b-8460-76c280de773e",
+    "user_id": "c2d8f8a3-4e17-4c9f-a5e6-d0912e8b235f",
+    "from": "2025-09-01",
+    "to": "2025-09-05",
+    "rooms": [
+      "9876dfc9-ef7a-48a0-8f31-a18742c0c828",
+      "7b1821a5-cd2e-4e78-a2bc-5a8aabd71e5e"
+    ]
+  }
   ```
   - Validates rooms belong to the hotel and are free (via Availability).
   - Returns 201 on success; 409 if any room is not available.
 
 ### Metric
 
-- `GET /api/metrics/hotel-users`
+- `GET /metrics/hotel-users`
   Returns unique users per hotel:
   ```json
   {
     "data": [
-      { "id":"HOTEL-001", "users":"2" },
-      { "id":"HOTEL-002", "users":"1" }
+      {
+        "id": "f1c8e1a8-57b8-4d2b-8460-76c280de773e",
+        "users": 2
+      },
+      {
+        "id": "b2c1f8d3-4e5a-4c6b-8d7e-9f0a1b2c3d4e",
+        "users": 1
+      }
     ],
-    "metadata":[]
+    "metadata": []
   }
   ```
 
