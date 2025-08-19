@@ -89,7 +89,7 @@ All responses are JSON. Prefix shown as `/api`.
 
 ### Metric
 
-- `GET /metrics/hotel-users`
+- `GET /metrics`
   Returns unique users per hotel:
   ```json
   {
