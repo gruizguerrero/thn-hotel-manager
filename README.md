@@ -32,7 +32,7 @@ src/
 
 ## API Endpoints
 
-All responses are JSON. Prefix shown as `/api`.
+All responses are JSON.
 
 ### Health
 
