@@ -16,16 +16,6 @@ final class FindMetricsQueryResponse implements Response
 
     }
 
-    public function id(): string
-    {
-        return $this->result[self::ID];
-    }
-
-    public function users(): string
-    {
-        return $this->result[self::USERS];
-    }
-
     public function result(): array
     {
         return $this->result;
