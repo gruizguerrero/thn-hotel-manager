@@ -25,7 +25,7 @@ SQL;
 
         $stmt->bindValue('hotel_id', $availabilityCalendarView->hotelId());
         $stmt->bindValue('room_id',  $availabilityCalendarView->roomId());
-        $stmt->bindValue('day',      $availabilityCalendarView->day()->format('Y-m-d')); // rango [from,to): usar < :to en consultas
+        $stmt->bindValue('day',      $availabilityCalendarView->day()->format('Y-m-d'));
         $stmt->bindValue('status',   $availabilityCalendarView->status());
         $stmt->bindValue('capacity', $availabilityCalendarView->capacity(), ParameterType::INTEGER);
 

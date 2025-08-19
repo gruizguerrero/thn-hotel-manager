@@ -13,7 +13,7 @@ use App\Shared\Domain\ValueObject\Uuid;
 use App\Shared\Infrastructure\Persistence\Doctrine\MySQL\Repository\AggregateRepository;
 use App\Tests\Integration\RepositoryTestCase;
 
-final class DoctrineBookingRepository extends RepositoryTestCase
+final class DoctrineBookingRepositoryTest extends RepositoryTestCase
 {
     public function test_it_books_rooms(): void
     {
