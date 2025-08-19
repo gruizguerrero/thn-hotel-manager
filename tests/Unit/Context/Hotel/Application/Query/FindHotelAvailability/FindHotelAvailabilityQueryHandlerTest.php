@@ -25,22 +25,19 @@ final class FindHotelAvailabilityQueryHandlerTest extends TestCase
     private const string HOTEL_CITY = 'Madrid';
     private const string HOTEL_COUNTRY = 'ES';
     private const int ROOM_CAPACITY = 2;
-    private FindHotelAvailabilityQueryResponseConverter $responseConverter;
     private AvailabilityCalendarViewRepository|MockObject $availabilityCalendarViewRepository;
     private HotelViewRepository|MockObject $hotelViewRepository;
     private FindHotelAvailabilityQueryHandler $handler;
     private FindHotelAvailabilityQuery $query;
-    private HotelView $hotelView;
-    private FindHotelAvailabilityQueryResponse $actualResponse;
 
     protected function setUp(): void
     {
-        $this->responseConverter = new FindHotelAvailabilityQueryResponseConverter();
+        $responseConverter = new FindHotelAvailabilityQueryResponseConverter();
         $this->availabilityCalendarViewRepository = $this->createMock(AvailabilityCalendarViewRepository::class);
         $this->hotelViewRepository = $this->createMock(HotelViewRepository::class);
 
         $this->handler = new FindHotelAvailabilityQueryHandler(
-            $this->responseConverter,
+            $responseConverter,
             $this->availabilityCalendarViewRepository,
             $this->hotelViewRepository
         );
@@ -52,9 +49,9 @@ final class FindHotelAvailabilityQueryHandlerTest extends TestCase
         $this->givenTheHotelExists();
         $this->givenThereAreAvailableRooms();
 
-        $this->whenTheQueryIsHandled();
+        $response = $this->whenTheQueryIsHandled();
 
-        $this->thenTheResponseShouldBeCorrect();
+        $this->thenTheResponseShouldBeCorrect($response);
     }
 
     private function givenAHotelAvailabilityQuery(): void
@@ -71,7 +68,7 @@ final class FindHotelAvailabilityQueryHandlerTest extends TestCase
 
     private function givenTheHotelExists(): void
     {
-        $this->hotelView = new HotelView(
+        $hotelView = new HotelView(
             self::HOTEL_ID,
             self::HOTEL_NAME,
             self::HOTEL_COUNTRY,
@@ -83,7 +80,7 @@ final class FindHotelAvailabilityQueryHandlerTest extends TestCase
             ->expects($this->once())
             ->method('find')
             ->with(self::HOTEL_ID)
-            ->willReturn($this->hotelView);
+            ->willReturn($hotelView);
     }
 
     private function givenThereAreAvailableRooms(): void
@@ -104,28 +101,19 @@ final class FindHotelAvailabilityQueryHandlerTest extends TestCase
                 $this->query->toDate()
             )
             ->willReturn($availableRooms);
-
-        $this->availabilityResults = [
-            [
-                'room_id' => self::ROOM_ID,
-                'capacity' => self::ROOM_CAPACITY
-            ]
-        ];
     }
 
-    private function whenTheQueryIsHandled(): void
+    private function whenTheQueryIsHandled(): FindHotelAvailabilityQueryResponse
     {
-        $this->actualResponse = $this->handler->__invoke($this->query);
+        return $this->handler->__invoke($this->query);
     }
 
-    private function thenTheResponseShouldBeCorrect(): void
+    private function thenTheResponseShouldBeCorrect(FindHotelAvailabilityQueryResponse $response): void
     {
-        $this->assertInstanceOf(FindHotelAvailabilityQueryResponse::class, $this->actualResponse);
+        $this->assertEquals(self::HOTEL_ID, $response->id());
+        $this->assertEquals(self::HOTEL_NAME, $response->name());
 
-        $this->assertEquals(self::HOTEL_ID, $this->actualResponse->id());
-        $this->assertEquals(self::HOTEL_NAME, $this->actualResponse->name());
-
-        $availableRooms = $this->actualResponse->availableRooms();
+        $availableRooms = $response->availableRooms();
         $this->assertCount(1, $availableRooms);
 
         $this->assertEquals(self::ROOM_ID, $availableRooms[0]['roomId']);
