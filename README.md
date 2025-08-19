@@ -124,8 +124,10 @@ RabbitMQ is used for domain event propagation (Symfony Messenger):
 
 The app is fully dockerized. From the project root:
 ```bash
-make install   # build containers, install deps, create DB, run migrations
+make install   # build containers depending on your architecture, install deps, create DB, run migrations
 ```
+
+Then I recommend running the acceptance tests directly
 
 ## Running Tests
 

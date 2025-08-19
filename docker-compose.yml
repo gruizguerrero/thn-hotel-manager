@@ -2,7 +2,6 @@ services:
   nginx:
     image: nginx:alpine
     container_name: nginx_server
-    platform: linux/arm64
     ports:
       - "80:80"
     volumes:
@@ -15,7 +14,6 @@ services:
     container_name: php_fpm
     build:
       dockerfile: docker/php-fpm/Dockerfile
-    platform: linux/arm64
     volumes:
       - ./:/var/www/app
       - /var/www/app/var/
@@ -25,7 +23,6 @@ services:
   mysql:
     image: mysql:8.0
     container_name: mysql
-    platform: linux/arm64
     extends:
       file: docker/mysql/volume_mappings.yml
       service: mysql
@@ -43,4 +40,3 @@ services:
     container_name: rabbitmq
     ports:
       - "15972:15672"
-

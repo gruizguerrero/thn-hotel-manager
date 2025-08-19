@@ -1,0 +1,10 @@
+services:
+  nginx:
+    platform: linux/amd64
+
+  php-fpm:
+    platform: linux/amd64
+
+  mysql:
+    platform: linux/amd64
+

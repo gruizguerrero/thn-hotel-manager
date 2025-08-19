@@ -4,10 +4,22 @@ PLATFORM := $(shell uname -s)
 
 .PHONY: install
 install:
+	@if [ ! -f "docker-compose.override.yml" ]; then \
+		ARCH=$$(uname -m); \
+		if [ "$$ARCH" = "arm64" ] || [ "$$ARCH" = "aarch64" ]; then \
+			echo "Detected ARM64 architecture, using arm64 configuration"; \
+			cp docker-compose.override.arm64.yml docker-compose.override.yml; \
+		elif [ "$$ARCH" = "x86_64" ]; then \
+			echo "Detected x86_64 architecture, using amd64 configuration"; \
+			cp docker-compose.override.amd64.yml docker-compose.override.yml; \
+		fi \
+	fi
 	docker compose build
 	docker compose up -d
 	docker compose exec php-fpm composer install --no-interaction
 	docker compose exec php-fpm bin/console doctrine:migrations:migrate --no-interaction
+	sleep 3 # Wait for rabbit before setup transports
+	docker compose exec php-fpm bin/console messenger:setup-transports --no-interaction
 
 .PHONY: php
 php:
