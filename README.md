@@ -138,3 +138,18 @@ make test-acceptance   # Acceptance tests validate end-to-end business behavior
 ```
 
 Acceptance tests exercise the API and messaging, asserting business behavior end-to-end.
+
+---
+
+### Some clarifications and notes
+
+* I strongly recommend reviewing the **acceptance tests**, as they’re the best guide to understand the system’s expected behavior and the API contracts—especially `metric.feature`, which **receives events from Rabbit, consumes them, and builds the metric projections in the handler**. I implemented this in the **simplest** possible way for the exercise. In production it wouldn’t be the most adequate or efficient, because there’s a risk of a **race condition** that could increment the number of unique users concurrently. This could be addressed by wrapping the operation in a **database transaction** and locking appropriately, or by using **persistent Redis** as a lock/helper with **MySQL as the source of truth**, there are multiple options.
+
+* In the **Booking** context, the “create booking” use case **should check availability again**. Even if we just fetched availability, there may be a tiny time window where the room gets booked by someone else. So we must verify those rooms are **still available** and also **lock the dates** before confirming.
+
+* I implemented **Availability** with a **calendar table** (one row per hotel room per day). Without this, we’d have to compute “available = total − reserved” on the fly, which is more expensive and slower. Ideally in production, the calendar would be prepopulated by reacting to a **HotelCreated** event (including its rooms). I made **Availability** its **own bounded context** because it’s called by both **Booking** and **Hotel** (or should be). Even if it’s not a public resource, it can grow a lot; pushing it into Hotel or Booking would overload those contexts. In the future, if it becomes a bottleneck, it can be **scaled independently**, for example as a microservice backed by **Elasticsearch** or another very fast search engine, fed by events from **Kafka topics** or **Rabbit queues**.
+
+* You’ll see I often model relationships as **N\:M** even when they could be **1\:N**. I do this because Doctrine tends to push you toward **bidirectional associations**, and I usually prefer to **avoid having an entity know about its aggregate**.
+
+
+
